@@ -27,7 +27,7 @@ LAZ (LASZip) is the ubiquitous geospatial point cloud format. It is an augmentat
 [ASPRS LAS](https://github.com/ASPRSorg/LAS) that utilizes an arithmetic encoder to efficiently 
 compress the point content. It has seen a number of revisions, but the latest supports 
 dimension-selective access and provides all of the metadata support that normal LAS provides.
-Importantly, multiple software implementations (laszrs, laz-perf, and LASzip) provide LAZ 
+Importantly, multiple software implementations ([laz-rs](https://github.com/laz-rs/laz-rs), [laz-perf](https://github.com/hobu/laz-perf), and [LASzip](https://github.com/laszip/laszip)) provide LAZ 
 compression and decompression, and laz-perf includes compilation to JavaScript which is 
 used by all JavaScript clients when consuming LAZ content. 
 
@@ -42,10 +42,11 @@ map tiles, lots of little files are a problem.
 
 LAZ provides a feature that allows us to concatenate the individual LAZ files
 into a single, large LAZ file. This is the concept of a dynamically-sized chunk
-table. It is a feature that Isenburg envisioned for quad-tree organized data,
-but it could work the same for an octree. Additionally, this chunk table
-provides the lookups needed for an HTTP-based client to compute where to
-directly access and incrementally read data. 
+table. It is a feature that [Martin Isenburg](https://twitter.com/rapidlasso)
+envisioned for quad-tree organized data, but it could work the same for an
+octree. Additionally, this chunk table provides the lookups needed for an
+HTTP-based client to compute where to directly access and incrementally read
+data. 
 
 ## Implementation details
 
@@ -61,3 +62,4 @@ Fill in the details of how this all works here
 Which software implements COPC? 
 How does it work? 
 What options matter are available? 
+
