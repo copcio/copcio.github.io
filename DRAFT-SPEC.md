@@ -56,10 +56,11 @@ The file may contain additional VLRs if desired.
 
 Like EPT, COPC stores hierarchy information to allow a reader to locate points that
 are in a particular octree node.  Also like EPT, the hierarchy **may** be arranged in
-a tree of pages.
+a tree of pages, but shall always consist of at least one hierarchy page. Hierarchy pages
+are contiguous in the data.
 
 The EPT hierarchy data is stored in an extended VLR ("entwine"/1234). The VLR data consists of
-one or more hierarchy pages. Each hierarchy data "page" is written as follows:
+one or more hierarchy pages. Each hierarchy data page is written as follows:
 
 The VoxelKey corresponds to the naming of
 [EPT data files](https://entwine.io/entwine-point-tile.html#ept-data).
