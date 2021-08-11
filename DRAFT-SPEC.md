@@ -23,16 +23,14 @@ a C program using the same notation.
 
 # Format details
 
-## VLRs
+## VLRs (VLR "user ID"/VLR record ID)
 
-A COPC file shall contain at least two VLRs.
-
-### LAZ ("laszip encoded"/22204)
+### LAZ ("laszip encoded"/22204) [required]
 
 A LAZ encoding VLR whose description is beyond the scope of this document.
 
 
-### COPC ("entwine"/1)
+### COPC ("entwine"/1) [required]
 
 The COPC VLR data is 80 bytes described by the following data structure.
 
@@ -52,6 +50,7 @@ WKT VLR (GeoTiff VLRs are not supported).
 
 If the data contains "extra bytes" a VLR containing that information shall also be present.
 
+The file may contain additional VLRs if desired.
 
 ## Hierarchy
 
@@ -112,8 +111,9 @@ in the page.
   from ept.json is stored in the LAS file header and LAS VLRs.
 - COPC currently provides no support for
   [ept-sources.json](https://entwine.io/entwine-point-tile.html#ept-sources).
-  File metadata support may be added in the future the future.
-- COPC only supports LAZ point formats and does not support binary or zstandard point arrangement.
+  File metadata support may be added in the future.
+- COPC only supports the LAZ point format and does not support binary or zstandard
+  point arrangements.
 - COPC chunks store only point data as LAZ. When stored as LAZ, EPT uses complete LAZ files
-  including the LAS header and perhaps supplementary data.
+  including the LAS header and perhaps VLRs.
 
