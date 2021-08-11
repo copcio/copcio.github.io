@@ -25,13 +25,14 @@ a C program using the same notation.
 
 ## VLRs
 
-A COPC file shall contain at least two VLRs
+A COPC file shall contain at least two VLRs.
 
-- LAZ ("laszip encoded"/22204)
+### LAZ ("laszip encoded"/22204)
 
-The description of the LAZ VLR is beyond the scope of this document.
+A LAZ encoding VLR whose description is beyond the scope of this document.
 
-- COPC ("entwine"/1)
+
+### COPC ("entwine"/1)
 
 The COPC VLR data is 80 bytes described by the following data structure.
 
@@ -42,14 +43,15 @@ The COPC VLR data is 80 bytes described by the following data structure.
       uint64_t reserved[8];         // Reserved for future use.
     };
 
+### WKT/spatial reference ("LASF_Projection"/2112)
+
 If the data can be described by a spatial reference, the file shall also contain a
 WKT VLR (GeoTiff VLRs are not supported).
 
-- WKT/spatial reference ("LASF_Projection"/2112)
+### Extra bytes ("LASF_Spec"/4)
 
 If the data contains "extra bytes" a VLR containing that information shall also be present.
 
-- Extra bytes ("LASF_Spec"/4)
 
 ## Hierarchy
 
@@ -62,13 +64,14 @@ one or more hierarchy pages. Each hierarchy data "page" is written as follows:
 
 The VoxelKey corresponds to the naming of
 [EPT data files](https://entwine.io/entwine-point-tile.html#ept-data).
-struct VoxelKey
-{
-  int32_t level;
-  int32_t x;
-  int32_t y;
-  int32_t z;
-};
+
+    struct VoxelKey
+    {
+      int32_t level;
+      int32_t x;
+      int32_t y;
+      int32_t z;
+    };
 
 An entry corresponds to a single key/value pair in an
 [EPT hierarchy](https://entwine.io/entwine-point-tile.html#ept-data),
