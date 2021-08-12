@@ -99,7 +99,7 @@ in the page.
     struct Page
     {
         uint64_t count;
-        Entry entires[count]; 
+        Entry entires[count];
     };  // The total size of the hierarchy page is (32 * count) + 8 bytes
 
 
@@ -110,7 +110,12 @@ in the page.
 - COPC currently provides no support for
   [ept-sources.json](https://entwine.io/entwine-point-tile.html#ept-sources).
   File metadata support may be added in the future.
-- COPC only supports the LAZ point format and does not support binary or zstandard
+- COPC only supports the LAZ point format and does not support binary
   point arrangements.
 - COPC chunks store only point data as LAZ. EPT, when stored as LAZ, uses complete 
   LAZ files including the LAS header and perhaps VLRs.
+
+# Credits
+
+COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor Manning of [Hobu, Inc.](https://hobu.co). Entwine and Entwine Point Tile were also designed and developed by Connor Manning of [Hobu, Inc](https://hobu.co)
+
