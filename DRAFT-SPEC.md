@@ -95,14 +95,14 @@ point data.
       int32_t pointCount;
     }
 
-The entries of a hierarchy page are preceded by a count containing the number of entries
-in the page.
+The entries of a hierarchy page are consecutive. The number of entries in a page can be determined
+by taking the size of the page (contained in the parent page as Entry::byteSize or in the COPC base VLR
+as CopcData::root_hier_size) and dividing by the size of an Entry (32 bytes)
 
     struct Page
     {
-        int64_t count;
-        Entry entires[count]; 
-    };  // The total size of the hierarchy page is (32 * count) + 8 bytes
+        Entry entires[page_size / 32]; 
+    };
 
 
 ## Differences from EPT
