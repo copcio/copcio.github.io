@@ -2,14 +2,14 @@
 
 # Introduction
 
-A COPC file is a special 1.4 LAZ file that stores point data organized as an octree.
-An LAZ 1.4 file is a LAS 1.4 file in which the point data is compressed using a
+A COPC file is a special LAZ 1.4 file that stores point data organized as an octree.
+An LAZ 1.4 file is a recoding of a LAS 1.4 file in which the point data is compressed using a
 custom encoding scheme.
 
 COPC is modeled after the [EPT data format](https://entwine.io/entwine-point-tile.html), but
-combines much of the information of an EPT dataset into a single file.  What would be
-individual data files in EPT are stored as chunks in a COPC file. This allows the data to be
-read by any reader than can handle variably-chunked LAZ 1.4 data. Not all information in
+combines most of the information of an EPT dataset into a single file.  What would be
+individual data files in EPT are stored as LAZ chunks in a COPC file. This allows the data to be
+consumed by any reader than can handle variably-chunked LAZ 1.4 data. Not all information in
 an EPT dataset is currently supported in a COPC file. More information about the differences
 between EPT data and COPC can be found below.
 
@@ -18,7 +18,7 @@ between EPT data and COPC can be found below.
 Some of the file format is described using C-language
 [fixed width integer types](https://en.cppreference.com/w/c/types/integer).
 Groups of entities are denoted with a C-language struct, though all data is packed
-in the struct and encoded as little-endian values, which many not be the case for
+in the struct and encoded as little-endian values, which may not be the case for
 a C program using the same notation.
 
 # Format details
@@ -28,7 +28,6 @@ a C program using the same notation.
 ### LAZ ("laszip encoded"/22204) [required]
 
 A LAZ encoding VLR whose description is beyond the scope of this document.
-
 
 ### COPC ("entwine"/1) [required]
 
