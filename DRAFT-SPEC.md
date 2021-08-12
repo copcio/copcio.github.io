@@ -67,10 +67,10 @@ The VoxelKey corresponds to the naming of
 
     struct VoxelKey
     {
-      int32_t level;
-      int32_t x;
-      int32_t y;
-      int32_t z;
+      uint32_t level;
+      uint32_t x;
+      uint32_t y;
+      uint32_t z;
     };
 
 An entry corresponds to a single key/value pair in an
