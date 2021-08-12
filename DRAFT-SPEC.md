@@ -67,10 +67,11 @@ The VoxelKey corresponds to the naming of
 
     struct VoxelKey
     {
-      uint32_t level;
-      uint32_t x;
-      uint32_t y;
-      uint32_t z;
+      // A value < 0 indicates an invalid VoxelKey
+      int32_t level;
+      int32_t x;
+      int32_t y;
+      int32_t z;
     };
 
 An entry corresponds to a single key/value pair in an
@@ -101,7 +102,7 @@ in the page.
 
     struct Page
     {
-        uint64_t count;
+        int64_t count;
         Entry entires[count]; 
     };  // The total size of the hierarchy page is (32 * count) + 8 bytes
 
