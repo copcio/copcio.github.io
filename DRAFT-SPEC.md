@@ -2,15 +2,13 @@
 
 # Introduction
 
-A COPC file is a special LAZ 1.4 file that stores point data organized as an octree.
-An LAZ 1.4 file is a recoding of a LAS 1.4 file in which the point data is compressed using a
-custom encoding scheme.
+A COPC file is a LAZ 1.4 file that stores point data organized as a cloud optimized octree.
 
 COPC is modeled after the [EPT data format](https://entwine.io/entwine-point-tile.html), but
 combines most of the information of an EPT dataset into a single file.  What would be
 individual data files in EPT are stored as LAZ chunks in a COPC file. This allows the data to be
 consumed by any reader than can handle variably-chunked LAZ 1.4 data. Not all information in
-an EPT dataset is currently supported in a COPC file. More information about the differences
+an EPT dataset is currently supported or necessary in a COPC file. More information about the differences
 between EPT data and COPC can be found below.
 
 # Notation
@@ -112,11 +110,12 @@ in the page.
 - COPC currently provides no support for
   [ept-sources.json](https://entwine.io/entwine-point-tile.html#ept-sources).
   File metadata support may be added in the future.
-- COPC only supports the LAZ point format and does not support binary or zstandard
+- COPC only supports the LAZ point format and does not support binary
   point arrangements.
-- COPC chunks store only point data as LAZ. When stored as LAZ, EPT uses complete LAZ files
-  including the LAS header and perhaps VLRs.
+- COPC chunks store only point data as LAZ. EPT, when stored as LAZ, uses complete 
+  LAZ files including the LAS header and perhaps VLRs.
 
 # Credits
 
 COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor Manning of [Hobu, Inc.](https://hobu.co). Entwine and Entwine Point Tile were also designed and developed by Connor Manning of [Hobu, Inc](https://hobu.co)
+
