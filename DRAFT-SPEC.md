@@ -35,10 +35,10 @@ The COPC VLR data is 80 bytes described by the following data structure.
 
     struct CopcData
     {
+      int64_t span;                 // Number of voxels in each spatial dimension
       uint64_t root_hier_offset;    // File offset to the first hierarchy page
       uint64_t root_hier_size;      // Size of the first hierarchy page in bytes.
-      uint16_t span;                // Number of voxels in each spatial dimension
-      uint64_t reserved[8];        // Reserved for future use.
+      uint64_t reserved[7];         // Reserved for future use.
     };
 
 ### WKT/spatial reference ("LASF_Projection"/2112)
