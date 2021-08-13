@@ -48,9 +48,14 @@ octree. Additionally, this chunk table provides the lookups needed for an
 HTTP-based client to compute where to directly access and incrementally read
 data.
 
-## DRAFT SPECIFICATION
+## DRAFT Specification
 
 A draft specification is viewable at [DRAFT-SPEC.md](DRAFT-SPEC.md)
+
+## Sample File
+
+A [sample COPC file](https://github.com/PDAL/data/blob/master/autzen/autzen-classified.copc.laz)
+can be found in the PDAL sample data repository.
 
 ## Software implementations
 
