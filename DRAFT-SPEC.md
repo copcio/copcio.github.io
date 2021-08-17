@@ -130,3 +130,8 @@ There is no official pronunciation of COPC. Here are some possible pronunciation
 * cop-pick – `kap pɪk`
 * see oh pee see – `si o pi si`
 
+# Structural Changes to Draft Specification
+
+* Removed `count` from `Page` struct
+* Changed Record ID of COPC hierarchy EVLR from 1234 to 1000
+
