@@ -101,7 +101,7 @@ as CopcData::root_hier_size) and dividing by the size of an Entry (32 bytes)
 
     struct Page
     {
-        Entry entires[page_size / 32]; 
+        Entry entires[page_size / 32];
     };
 
 
@@ -114,10 +114,19 @@ as CopcData::root_hier_size) and dividing by the size of an Entry (32 bytes)
   File metadata support may be added in the future.
 - COPC only supports the LAZ point format and does not support binary
   point arrangements.
-- COPC chunks store only point data as LAZ. EPT, when stored as LAZ, uses complete 
+- COPC chunks store only point data as LAZ. EPT, when stored as LAZ, uses complete
   LAZ files including the LAS header and perhaps VLRs.
 
 # Credits
 
 COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor Manning of [Hobu, Inc.](https://hobu.co). Entwine and Entwine Point Tile were also designed and developed by Connor Manning of [Hobu, Inc](https://hobu.co)
+
+# Pronunciation
+
+There is no official pronunciation of COPC. Here are some possible pronunciations ones:
+
+* co-pick – `ko pɪk`
+* cop-see – `kap si`
+* cop-pick – `kap pɪk`
+* see oh pee see – `si o pi si`
 
