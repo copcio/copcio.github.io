@@ -40,7 +40,7 @@ begin at offset 375. The data described below must begin at offset 429.
       uint64_t wkt_vlr_size;        // Size of the *data* of the WKT VLR if it exists, 0 otherwise
       uint64_t eb_vlr_offset;       // File offset of the *data* of the extra bytes VLR if it exists, 0 otherwise
       uint64_t eb_vlr_size;         // Size of the *data* of the extra bytes VLR if it exists, 0 otherwise
-      uint64_t reserved[11];        // Reserved for future use.
+      uint64_t reserved[11];        // Reserved for future use. Must be 0.
     };
 
 ### LAZ ("laszip encoded"/22204) [required]
@@ -146,7 +146,7 @@ There is no official pronunciation of COPC. Here are some possibilities:
 * Changed Record ID of COPC hierarchy EVLR from 1234 to 1000
 * Require reserved entries of the COPC VLR to have the value 0
 * Require the COPC VLR to be located immediately after the header at offset 375.
-* Increase the size of the COPC VLR data block to 160 bytes.
+* Increase the size of the COPC VLR data structure to 160 bytes.
 * Add `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size`,
   `eb_vlr_offset`, `eb_vlr_size` to the COPC VLR, replacing 6 `reserved` entries.
 
