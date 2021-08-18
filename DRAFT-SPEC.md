@@ -23,21 +23,28 @@ a C program using the same notation.
 
 ## VLRs (VLR "user ID"/VLR record ID)
 
-### LAZ ("laszip encoded"/22204) [required]
-
-A LAZ encoding VLR whose description is beyond the scope of this document.
-
 ### COPC ("entwine"/1) [required]
 
-The COPC VLR data is 80 bytes described by the following data structure.
+The COPC VLR data is 160 bytes described by the following data structure.
+The COPC VLR *must* immediately follow the LAZ header.
 
     struct CopcData
     {
       int64_t span;                 // Number of voxels in each spatial dimension
       uint64_t root_hier_offset;    // File offset to the first hierarchy page
-      uint64_t root_hier_size;      // Size of the first hierarchy page in bytes.
-      uint64_t reserved[7];         // Reserved for future use.
+      uint64_t root_hier_size;      // Size of the first hierarchy page in bytes
+      uint64_t laz_vlr_offset;      // File offset of the *data* of the LAZ VLR
+      uint64_t laz_vlr_size;        // Size of the *data* of the LAZ VLR.
+      uint64_t wkt_vlr_offset;      // File offset of the *data* of the WKT VLR if it exists, 0 otherwise
+      uint64_t wkt_vlr_size;        // Size of the *data* of the WKT VLR if it exists, 0 otherwise
+      uint64_t eb_vlr_offset;       // File offset of the *data* of the extra bytes VLR if it exists, 0 otherwise
+      uint64_t eb_vlr_size;         // Size of the *data* of the extra bytes VLR if it exists, 0 otherwise
+      uint64_t reserved[11];        // Reserved for future use.
     };
+
+### LAZ ("laszip encoded"/22204) [required]
+
+A LAZ encoding VLR whose description is beyond the scope of this document.
 
 ### WKT/spatial reference ("LASF_Projection"/2112)
 
@@ -123,7 +130,7 @@ COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor Manning
 
 # Pronunciation
 
-There is no official pronunciation of COPC. Here are some possible pronunciations ones:
+There is no official pronunciation of COPC. Here are some possibilities:
 
 * co-pick – `ko pɪk`
 * cop-see – `kap si`
@@ -134,4 +141,32 @@ There is no official pronunciation of COPC. Here are some possible pronunciation
 
 * Removed `count` from `Page` struct
 * Changed Record ID of COPC hierarchy EVLR from 1234 to 1000
+* Require the COPC VLR to immediately follow the LAZ header and increase its size
+  to 160 bytes.
+* Add `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size`,
+  `eb_vlr_offset`, `eb_vlr_size` to the COPC VLR, replacing 6 `reserved` entries.
 
+# Reader Implementation Notes
+
+COPC is designed so that a reader needs to know little about the structure of a LAZ file.
+By reading the first 549 bytes (375 for the header + 54 for the COPC VLR header + 160
+for the COPC VLR), the software can verify that the file is a COPC file and determine
+the point data record format and point data record length, both of which are necessary
+to create a LAZ decompressor.
+
+Readers should:
+* verify that the first four bytes of the file contain the ASCII characters "LASF".
+* verify that the 7 bytes starting offset 377 contain the characters "entwine".
+* verify that the bytes at offsets 393 and 394 contain the values 1 and 0,
+  respectively (this is the COPC version number, 1).
+* determine the point data record format by reading the byte at offset 104, masking off the
+  two high bits, which are used by LAZ to indicate compression, and can be ignored.
+* determine the point data record length by reading two bytes at offset 105.
+* determine the offset and size of the root hierarchy page by reading the 8-byte entities
+  at offset 419 and 427, respectively.
+
+The octree hierarchy is arranged in pages. The COPC VLR provides information pointing to
+root page. When reading data from a network connection, information in each page will
+be used to traverse to child pages.  Each entry in a hierarchy page either refers to a
+child hierarchy page or a data chunk. The size and file offset of each data chunk is
+provided in the hierarchy entries, allowing the chunks to be directly read for decoding.
