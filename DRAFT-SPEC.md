@@ -29,14 +29,15 @@ A LAZ encoding VLR whose description is beyond the scope of this document.
 
 ### COPC ("entwine"/1) [required]
 
-The COPC VLR data is 80 bytes described by the following data structure.
+The COPC VLR data is 80 bytes described by the following data structure. The reserved
+elements must be set to 0.
 
     struct CopcData
     {
       int64_t span;                 // Number of voxels in each spatial dimension
       uint64_t root_hier_offset;    // File offset to the first hierarchy page
       uint64_t root_hier_size;      // Size of the first hierarchy page in bytes.
-      uint64_t reserved[7];         // Reserved for future use.
+      uint64_t reserved[7];         // Reserved for future use. Must be 0.
     };
 
 ### WKT/spatial reference ("LASF_Projection"/2112)
@@ -134,4 +135,4 @@ There is no official pronunciation of COPC. Here are some possible pronunciation
 
 * Removed `count` from `Page` struct
 * Changed Record ID of COPC hierarchy EVLR from 1234 to 1000
-
+* Require reserved entries of the COPC VLR to have the value 0
