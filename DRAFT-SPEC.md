@@ -8,8 +8,8 @@ COPC is modeled after the [EPT data format](https://entwine.io/entwine-point-til
 combines most of the information of an EPT dataset into a single file.  What would be
 individual data files in EPT are stored as LAZ chunks in a COPC file. This allows the data to be
 consumed by any reader than can handle variably-chunked LAZ 1.4 data. Not all information in
-an EPT dataset is currently supported or necessary in a COPC file. More information about the differences
-between EPT data and COPC can be found below.
+an EPT dataset is currently supported or necessary in a COPC file. More information about
+the differences between EPT data and COPC can be found below.
 
 # Notation
 
@@ -25,8 +25,9 @@ a C program using the same notation.
 
 ### COPC ("entwine"/1) [required]
 
-The COPC VLR data is 160 bytes described by the following data structure.
-The COPC VLR *must* immediately follow the LAZ header.
+The COPC VLR data is 160 bytes described by the following structure. The reserved
+elements must be set to 0. The COPC VLR *must* immediately follow the file header and
+begin at offset 375. The data described below must begin at offset 429.
 
     struct CopcData
     {
@@ -103,8 +104,8 @@ point data.
     }
 
 The entries of a hierarchy page are consecutive. The number of entries in a page can be determined
-by taking the size of the page (contained in the parent page as Entry::byteSize or in the COPC base VLR
-as CopcData::root_hier_size) and dividing by the size of an Entry (32 bytes)
+by taking the size of the page (contained in the parent page as Entry::byteSize or in the
+COPC base VLR as CopcData::root_hier_size) and dividing by the size of an Entry (32 bytes).
 
     struct Page
     {
@@ -126,7 +127,9 @@ as CopcData::root_hier_size) and dividing by the size of an Entry (32 bytes)
 
 # Credits
 
-COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor Manning of [Hobu, Inc.](https://hobu.co). Entwine and Entwine Point Tile were also designed and developed by Connor Manning of [Hobu, Inc](https://hobu.co)
+COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor Manning of
+[Hobu, Inc.](https://hobu.co). Entwine and Entwine Point Tile were also designed and
+developed by Connor Manning of [Hobu, Inc](https://hobu.co)
 
 # Pronunciation
 
@@ -141,8 +144,9 @@ There is no official pronunciation of COPC. Here are some possibilities:
 
 * Removed `count` from `Page` struct
 * Changed Record ID of COPC hierarchy EVLR from 1234 to 1000
-* Require the COPC VLR to immediately follow the LAZ header and increase its size
-  to 160 bytes.
+* Require reserved entries of the COPC VLR to have the value 0
+* Require the COPC VLR to be located immediately after the header at offset 375.
+* Increase the size of the COPC VLR data block to 160 bytes.
 * Add `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size`,
   `eb_vlr_offset`, `eb_vlr_size` to the COPC VLR, replacing 6 `reserved` entries.
 
