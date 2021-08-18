@@ -8,8 +8,8 @@ COPC is modeled after the [EPT data format](https://entwine.io/entwine-point-til
 combines most of the information of an EPT dataset into a single file.  What would be
 individual data files in EPT are stored as LAZ chunks in a COPC file. This allows the data to be
 consumed by any reader than can handle variably-chunked LAZ 1.4 data. Not all information in
-an EPT dataset is currently supported or necessary in a COPC file. More information about the differences
-between EPT data and COPC can be found below.
+an EPT dataset is currently supported or necessary in a COPC file. More information about
+the differences between EPT data and COPC can be found below.
 
 # Notation
 
@@ -23,14 +23,11 @@ a C program using the same notation.
 
 ## VLRs (VLR "user ID"/VLR record ID)
 
-### LAZ ("laszip encoded"/22204) [required]
-
-A LAZ encoding VLR whose description is beyond the scope of this document.
-
 ### COPC ("entwine"/1) [required]
 
-The COPC VLR data is 80 bytes described by the following data structure. The reserved
-elements must be set to 0.
+The COPC VLR data is 80 bytes described by the following structure. The reserved
+elements must be set to 0. The COPC VLR must immediately follow the file header and
+begin at offset 375. The data described below must begin at offset 429.
 
     struct CopcData
     {
@@ -39,6 +36,10 @@ elements must be set to 0.
       uint64_t root_hier_size;      // Size of the first hierarchy page in bytes.
       uint64_t reserved[7];         // Reserved for future use. Must be 0.
     };
+
+### LAZ ("laszip encoded"/22204) [required]
+
+A LAZ encoding VLR whose description is beyond the scope of this document.
 
 ### WKT/spatial reference ("LASF_Projection"/2112)
 
@@ -97,8 +98,8 @@ point data.
     }
 
 The entries of a hierarchy page are consecutive. The number of entries in a page can be determined
-by taking the size of the page (contained in the parent page as Entry::byteSize or in the COPC base VLR
-as CopcData::root_hier_size) and dividing by the size of an Entry (32 bytes)
+by taking the size of the page (contained in the parent page as Entry::byteSize or in the
+COPC base VLR as CopcData::root_hier_size) and dividing by the size of an Entry (32 bytes).
 
     struct Page
     {
@@ -120,7 +121,9 @@ as CopcData::root_hier_size) and dividing by the size of an Entry (32 bytes)
 
 # Credits
 
-COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor Manning of [Hobu, Inc.](https://hobu.co). Entwine and Entwine Point Tile were also designed and developed by Connor Manning of [Hobu, Inc](https://hobu.co)
+COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor Manning of
+[Hobu, Inc.](https://hobu.co). Entwine and Entwine Point Tile were also designed and
+developed by Connor Manning of [Hobu, Inc](https://hobu.co)
 
 # Pronunciation
 
@@ -136,3 +139,4 @@ There is no official pronunciation of COPC. Here are some possible pronunciation
 * Removed `count` from `Page` struct
 * Changed Record ID of COPC hierarchy EVLR from 1234 to 1000
 * Require reserved entries of the COPC VLR to have the value 0
+* Require the COPC VLR to be located immediately after the header at offset 375.
