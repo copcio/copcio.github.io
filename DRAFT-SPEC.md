@@ -125,6 +125,14 @@ COPC base VLR as CopcData::root_hier_size) and dividing by the size of an Entry 
 - COPC chunks store only point data as LAZ. EPT, when stored as LAZ, uses complete
   LAZ files including the LAS header and perhaps VLRs.
 
+# Example Data
+
+* The venerable [Autzen Stadium](https://github.com/PDAL/data/tree/master/autzen) file commonly used in PDAL and other open source testing
+scenarios is available as a 80mb COPC file at [https://github.com/PDAL/data/blob/master/autzen/autzen-classified.copc.laz](https://github.com/PDAL/data/blob/master/autzen/autzen-classified.copc.laz)
+
+* SoFi Stadium is available as a 2.3gb COPC file at ``s3://hobu-lidar/sofi.copc.laz``.
+  The data are courtesy of [US Army Corps of Engineers Remote Sensing & GIS Center of Expertise](https://www.erdc.usace.army.mil/Locations/CRREL/) / [National Center for Airborne Laser Mapping](http://ncalm.cive.uh.edu/)
+
 # Credits
 
 COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor Manning of
