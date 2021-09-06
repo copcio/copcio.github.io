@@ -109,7 +109,7 @@ COPC base VLR as CopcData::root_hier_size) and dividing by the size of an Entry 
 
     struct Page
     {
-        Entry entires[page_size / 32];
+        Entry entries[page_size / 32];
     };
 
 
