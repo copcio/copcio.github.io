@@ -1,37 +1,72 @@
 # **DRAFT Specification**
 
+
+# Table of contents
+1. [Introduction](#introduction)
+2. [Notation](#notation)
+3. [Implementation](#implementation)
+    1. [``info`` VLR](#info-vlr)
+    2. [``hierarchy`` VLR](#hierarchy-vlr)
+    3. [LAZ VLR](#laz-vlr)
+    4. [Spatial reference VLR](#spatial-reference-vlr)
+    5. [Extra bytes VLR](#extra-bytes-vlr)
+4. [Differences from EPT](#differences-from-ept)
+5. [Example Data](#example-data)
+6. [Credits](#credits)
+7. [Pronunciation](#pronunciation)
+8. [Reader Implementation Notes](#reader-implementation-notes)
+9. [Errata](#errata)
+
 # Introduction
 
-A COPC file is a LAZ 1.4 file that stores point data organized as a cloud optimized octree.
+A COPC file is a LAZ 1.4 file that stores point data organized in a clustered
+octree.
 
-COPC is modeled after the [EPT data format](https://entwine.io/entwine-point-tile.html), but
-combines most of the information of an EPT dataset into a single file.  What would be
-individual data files in EPT are stored as LAZ chunks in a COPC file. This allows the data to be
-consumed by any reader than can handle variably-chunked LAZ 1.4 data. Not all information in
-an EPT dataset is currently supported or necessary in a COPC file. More information about
-the differences between EPT data and COPC can be found below.
+COPC is modeled after the [EPT data
+format](https://entwine.io/entwine-point-tile.html), but clusters the storage
+of EPT information into a single file. What would be individual data files in
+EPT are stored as variably-chunked LAZ data in a COPC file.  This allows the
+data to be consumed by any reader than can handle variably-chunked LAZ 1.4 data
+(most LASzip-based implementations). Not all information in an EPT dataset is
+currently supported or necessary in a COPC file. More information about the
+differences between EPT data and COPC can be found below.
 
 # Notation
 
-Some of the file format is described using C-language
-[fixed width integer types](https://en.cppreference.com/w/c/types/integer).
-Groups of entities are denoted with a C-language struct, though all data is packed
-in the struct and encoded as little-endian values, which may not be the case for
-a C program using the same notation.
+Some of the file format is described using C-language [fixed width integer
+types](https://en.cppreference.com/w/c/types/integer).  Groups of entities are
+denoted with a C-language struct, though all data is packed in the struct and
+encoded as little-endian values, which may not be the case for a C program
+using the same notation.
 
-# Format details
+# Implementation
 
-## VLRs (VLR "user ID"/VLR record ID)
+Five key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is unorganized:
 
-### COPC ("entwine"/1) [required]
+* It *MUST* contain a COPC ``info`` VLR
+* It *MUST* contain a COPC ``hierarchy`` VLR
+* It *MUST* be stored as LAZ 1.4 (no "compatibility" mode)
+* It *MUST* contain OGC WKTv1 VLR if the data has a spatial reference
+* It *MUST* use LAZ variable chunking to store individual nodes as defined in the hierarchy
 
-The COPC VLR data is 160 bytes described by the following structure. The reserved
-elements must be set to 0. The COPC VLR *must* immediately follow the file header and
-begin at offset 375. The data described below must begin at offset 429.
+## ``info`` VLR
 
-    struct CopcData
+| User ID                    | Record ID        |
+| -------------------------- | ---------------- |
+| ``entwine``                | ``1``            |
+
+The ``info`` VLR *MUST* exist.
+
+The ``info`` VLR *MAY* be used by software clients to know the details of the
+``hierarchy`` VLR.
+
+The ``info`` VLR is ``160`` bytes described by the following structure. ``reserved``
+elements *MUST* be set to ``0``. The ``info`` VLR *MUST* immediately follow the file header and
+begin at offset ``375``. The data described below *MUST* begin at offset ``429``.
+
+    struct CopcInfo
     {
-      int64_t span;                 // Number of voxels in each spatial dimension
+      int64_t span;                 // Number of voxels in each spatial dimension (typically powers of 2)
       uint64_t root_hier_offset;    // File offset to the first hierarchy page
       uint64_t root_hier_size;      // Size of the first hierarchy page in bytes
       uint64_t laz_vlr_offset;      // File offset of the *data* of the LAZ VLR
@@ -43,30 +78,25 @@ begin at offset 375. The data described below must begin at offset 429.
       uint64_t reserved[11];        // Reserved for future use. Must be 0.
     };
 
-### LAZ ("laszip encoded"/22204) [required]
 
-A LAZ encoding VLR whose description is beyond the scope of this document.
 
-### WKT/spatial reference ("LASF_Projection"/2112)
+## ``hierarchy`` VLR
 
-If the data can be described by a spatial reference, the file shall also contain a
-WKT VLR (GeoTiff VLRs are not supported).
 
-### Extra bytes ("LASF_Spec"/4)
 
-If the data contains "extra bytes" a VLR containing that information shall also be present.
+| User ID                    | Record ID        |
+| -------------------------- | ---------------- |
+| ``entwine``                | ``1000``         |
 
-The file may contain additional VLRs if desired.
+The ``hierarchy`` VLR *MUST* exist.
 
-## Hierarchy
+Like EPT, COPC stores hierarchy information to allow a reader to locate points
+that are in a particular octree node.  Also like EPT, the hierarchy *MAY* be
+arranged in a tree of pages, but shall always consist of at least ONE hierarchy
+page. Hierarchy pages are contiguous in the data.
 
-Like EPT, COPC stores hierarchy information to allow a reader to locate points that
-are in a particular octree node.  Also like EPT, the hierarchy **may** be arranged in
-a tree of pages, but shall always consist of at least one hierarchy page. Hierarchy pages
-are contiguous in the data.
-
-The EPT hierarchy data is stored in an extended VLR ("entwine"/1000). The VLR data consists of
-one or more hierarchy pages. Each hierarchy data page is written as follows:
+The VLR data consists of one or more hierarchy pages. Each hierarchy data page
+is written as follows:
 
 The VoxelKey corresponds to the naming of
 [EPT data files](https://entwine.io/entwine-point-tile.html#ept-data).
@@ -103,17 +133,47 @@ point data.
       int32_t pointCount;
     }
 
-The entries of a hierarchy page are consecutive. The number of entries in a page can be determined
-by taking the size of the page (contained in the parent page as Entry::byteSize or in the
-COPC base VLR as CopcData::root_hier_size) and dividing by the size of an Entry (32 bytes).
+The entries of a hierarchy page are consecutive. The number of entries in a
+page can be determined by taking the size of the page (contained in the parent
+page as ``Entry::byteSize`` or in the COPC ``info`` VLR as
+``CopcData::root_hier_size``) and dividing by the size of an ``Entry`` (32
+bytes).
 
     struct Page
     {
         Entry entries[page_size / 32];
     };
 
+## LAZ VLR
 
-## Differences from EPT
+| User ID                    | Record ID        |
+| -------------------------- | ---------------- |
+| ``laszip encoded``         | ``22204``        |
+
+The LAZ VLR *MUST* exist. A LAZ encoding VLR whose description is beyond the
+scope of this document.
+
+## Spatial reference VLR
+
+| User ID                    | Record ID        |
+| -------------------------- | ---------------- |
+| ``LASF_Projection``        | ``2112``         |
+
+The spatial reference VLR *MAY* exist.
+
+COPC clients are not expected to consume GeoTIFF VLRs, although
+their presence is allowed.
+
+## Extra bytes VLR
+
+| User ID        | Record ID        |
+| -------------- | ---------------- |
+| ``LASF_Spec``  | ``4``            |
+
+An Extra Bytes VLR containing that information *MAY* also be present.
+
+
+# Differences from EPT
 
 - COPC has no [ept.json](https://entwine.io/entwine-point-tile.html#ept-data). The information
   from ept.json is stored in the LAS file header and LAS VLRs.
@@ -148,16 +208,6 @@ There is no official pronunciation of COPC. Here are some possibilities:
 * cop-pick – `kap pɪk`
 * see oh pee see – `si o pi si`
 
-# Structural Changes to Draft Specification
-
-* Removed `count` from `Page` struct
-* Changed Record ID of COPC hierarchy EVLR from 1234 to 1000
-* Require reserved entries of the COPC VLR to have the value 0
-* Require the COPC VLR to be located immediately after the header at offset 375.
-* Increase the size of the COPC VLR data structure to 160 bytes.
-* Add `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size`,
-  `eb_vlr_offset`, `eb_vlr_size` to the COPC VLR, replacing 6 `reserved` entries.
-
 # Reader Implementation Notes
 
 COPC is designed so that a reader needs to know little about the structure of a LAZ file.
@@ -182,3 +232,15 @@ root page. When reading data from a network connection, information in each page
 be used to traverse to child pages.  Each entry in a hierarchy page either refers to a
 child hierarchy page or a data chunk. The size and file offset of each data chunk is
 provided in the hierarchy entries, allowing the chunks to be directly read for decoding.
+
+# Errata
+
+* Removed `count` from `Page` struct
+* Changed Record ID of COPC hierarchy EVLR from 1234 to 1000
+* Require reserved entries of the COPC VLR to have the value 0
+* Require the COPC VLR to be located immediately after the header at offset 375.
+* Increase the size of the COPC VLR data structure to 160 bytes.
+* Add `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size`,
+  `eb_vlr_offset`, `eb_vlr_size` to the COPC VLR, replacing 6 `reserved` entries.
+
+
