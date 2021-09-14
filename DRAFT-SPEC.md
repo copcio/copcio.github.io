@@ -41,13 +41,12 @@ using the same notation.
 
 # Implementation
 
-Five key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is unorganized:
+Four key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is unorganized:
 
 * It *MUST* contain a COPC ``info`` VLR
 * It *MUST* contain a COPC ``hierarchy`` VLR
 * It *MUST* be stored as LAZ 1.4 (no "compatibility" mode)
 * It *MUST* contain OGC WKTv1 VLR if the data has a spatial reference
-* It *MUST* use LAZ variable chunking to store individual nodes as defined in the hierarchy
 
 ## ``info`` VLR
 
