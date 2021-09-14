@@ -1,4 +1,4 @@
-# **DRAFT Specification**
+# ***DRAFT*** Cloud Optimized Point Cloud Specification ***DRAFT***
 
 
 # Table of contents
@@ -15,21 +15,21 @@
 6. [Credits](#credits)
 7. [Pronunciation](#pronunciation)
 8. [Reader Implementation Notes](#reader-implementation-notes)
-9. [Errata](#errata)
+9. [Structural Changes to Draft Specification](#structural-changes-to-draft-specification)
 
 # Introduction
 
 A COPC file is a LAZ 1.4 file that stores point data organized in a clustered
-octree.
+octree. It does this by providing some VLRs and using the variable chunking
+strategy of LAZ 1.4.
 
-COPC is modeled after the [EPT data
-format](https://entwine.io/entwine-point-tile.html), but clusters the storage
-of EPT information into a single file. What would be individual data files in
-EPT are stored as variably-chunked LAZ data in a COPC file.  This allows the
-data to be consumed by any reader than can handle variably-chunked LAZ 1.4 data
-(most LASzip-based implementations). Not all information in an EPT dataset is
-currently supported or necessary in a COPC file. More information about the
-differences between EPT data and COPC can be found below.
+Data organization of COPC is modeled after the [EPT data
+format](https://entwine.io/entwine-point-tile.html), but COPC clusters the
+storage of the octree as variably-chunked LAZ data in a single file.  This
+allows the data to be consumed by any reader than can handle variably-chunked
+LAZ 1.4 (most LASzip-based implementations). Not all information in an EPT
+dataset is currently supported or necessary in a COPC file. More information
+about the differences between EPT data and COPC can be found below.
 
 # Notation
 
@@ -81,8 +81,6 @@ begin at offset ``375``. The data described below *MUST* begin at offset ``429``
 
 
 ## ``hierarchy`` VLR
-
-
 
 | User ID                    | Record ID        |
 | -------------------------- | ---------------- |
@@ -170,34 +168,42 @@ their presence is allowed.
 | -------------- | ---------------- |
 | ``LASF_Spec``  | ``4``            |
 
-An Extra Bytes VLR containing that information *MAY* also be present.
+An Extra Bytes VLR containing that information *MUST* be present
+if extra per-point data is provided.
 
 
 # Differences from EPT
 
-- COPC has no [ept.json](https://entwine.io/entwine-point-tile.html#ept-data). The information
+* COPC has no [ept.json](https://entwine.io/entwine-point-tile.html#ept-data). The information
   from ept.json is stored in the LAS file header and LAS VLRs.
-- COPC currently provides no support for
+* COPC currently provides no support for
   [ept-sources.json](https://entwine.io/entwine-point-tile.html#ept-sources).
   File metadata support may be added in the future.
-- COPC only supports the LAZ point format and does not support binary
+* COPC only supports the LAZ point format and does not support binary
   point arrangements.
-- COPC chunks store only point data as LAZ. EPT, when stored as LAZ, uses complete
+* COPC chunks store only point data as LAZ. EPT, when stored as LAZ, uses complete
   LAZ files including the LAS header and perhaps VLRs.
 
 # Example Data
 
-* The venerable [Autzen Stadium](https://github.com/PDAL/data/tree/master/autzen) file commonly used in PDAL and other open source testing
-scenarios is available as a 80mb COPC file at [https://github.com/PDAL/data/blob/master/autzen/autzen-classified.copc.laz](https://github.com/PDAL/data/blob/master/autzen/autzen-classified.copc.laz)
+* The venerable [Autzen
+  Stadium](https://github.com/PDAL/data/tree/master/autzen) file commonly used
+  in PDAL and other open source testing scenarios is available as a 80mb COPC
+  file at
+  [https://github.com/PDAL/data/blob/master/autzen/autzen-classified.copc.laz](https://github.com/PDAL/data/blob/master/autzen/autzen-classified.copc.laz)
 
-* SoFi Stadium is available as a 2.3gb COPC file at [https://hobu-lidar.s3.amazonaws.com/sofi.copc.laz](https://hobu-lidar.s3.amazonaws.com/sofi.copc.laz).
-  The data are courtesy of [US Army Corps of Engineers Remote Sensing & GIS Center of Expertise](https://www.erdc.usace.army.mil/Locations/CRREL/) / [National Center for Airborne Laser Mapping](http://ncalm.cive.uh.edu/)
+* SoFi Stadium is available as a 2.3gb COPC file at
+  [https://hobu-lidar.s3.amazonaws.com/sofi.copc.laz](https://hobu-lidar.s3.amazonaws.com/sofi.copc.laz).
+  The data are courtesy of [US Army Corps of Engineers Remote Sensing & GIS
+  Center of Expertise](https://www.erdc.usace.army.mil/Locations/CRREL/) /
+  [National Center for Airborne Laser Mapping](http://ncalm.cive.uh.edu/)
 
 # Credits
 
-COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor Manning of
-[Hobu, Inc.](https://hobu.co). Entwine and Entwine Point Tile were also designed and
-developed by Connor Manning of [Hobu, Inc](https://hobu.co)
+COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor
+Manning of [Hobu, Inc.](https://hobu.co). [Entwine](https://entwine.io) and
+[Entwine Point Tile](https://entwine.io/entwine-point-tile.html) were also
+designed and developed by Connor Manning of [Hobu, Inc](https://hobu.co)
 
 # Pronunciation
 
@@ -233,7 +239,7 @@ be used to traverse to child pages.  Each entry in a hierarchy page either refer
 child hierarchy page or a data chunk. The size and file offset of each data chunk is
 provided in the hierarchy entries, allowing the chunks to be directly read for decoding.
 
-# Errata
+# Structural Changes to Draft Specification
 
 * Removed `count` from `Page` struct
 * Changed Record ID of COPC hierarchy EVLR from 1234 to 1000
