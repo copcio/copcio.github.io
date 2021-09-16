@@ -195,9 +195,9 @@ entity names](https://pdal.io/dimensions.html) are used for specificity.
 | ScanAngleRank | 14 | 6, 7, 8 |
 | PointSourceId | 15 | 6, 7, 8 |
 | GpsTime | 16 | 6, 7, 8 |
-| Red | 17 |  6, 7 |
-| Green | 18 |  6, 7 |
-| Blue | 19 |  6, 7 |
+| Red | 17 |  7, 8 |
+| Green | 18 |  7, 8 |
+| Blue | 19 |  7, 8 |
 | Infrared | 20 |  8 |
 
 
