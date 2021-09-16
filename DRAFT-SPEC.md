@@ -168,8 +168,6 @@ Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``stats
     {
         double minimum;
         double maximum;
-        double mean;
-        double variance;
     }
 
 
