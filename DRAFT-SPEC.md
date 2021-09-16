@@ -180,30 +180,28 @@ to the LAS PDRF and any [Extra bytes VLR](extra-bytes-VLR), except
 to include additional `CopcStatistic` entries for each of the four
 Classification Flag items.
 
-[PDAL dimension entity
-names](https://pdal.io/dimensions.html) are used for specificity.
-
 
 | Dimension Name | Position | PDRF |
 | :-- | :--: | :--: |
 | Intensity | 0 | 6, 7, 8 |
-| ReturnNumber | 1 | 6, 7, 8 |
-| NumberOfReturns | 2 | 6, 7, 8 |
+| Return Number | 1 | 6, 7, 8 |
+| Number of Returns | 2 | 6, 7, 8 |
 | Synthetic | 3 | 6, 7, 8 |
 | KeyPoint | 4 | 6, 7, 8 |
 | Withheld | 5 | 6, 7, 8 |
 | Overlap | 6 | 6, 7, 8 |
-| ScanChannel | 7 | 6, 7, 8 |
-| EdgeOfFlightLine | 8 | 6, 7, 8 |
-| Classification | 9 | 6, 7, 8 |
-| UserData | 10 | 6, 7, 8 |
-| ScanAngleRank | 11 | 6, 7, 8 |
-| PointSourceId | 12 | 6, 7, 8 |
-| GpsTime | 13 | 6, 7, 8 |
-| Red | 14 |  7, 8 |
-| Green | 15 |  7, 8 |
-| Blue | 16 |  7, 8 |
-| Infrared | 17 |  8 |
+| Scanner Channel | 7 | 6, 7, 8 |
+| Scan Direction Flag | 8 | 6, 7, 8 |
+| Edge of Flight Line | 9 | 6, 7, 8 |
+| Classification | 10 | 6, 7, 8 |
+| User Data | 11 | 6, 7, 8 |
+| Scan Angle | 12 | 6, 7, 8 |
+| Point Source ID | 13 | 6, 7, 8 |
+| GPS Time | 14 | 6, 7, 8 |
+| Red | 15 |  7, 8 |
+| Green | 16 |  7, 8 |
+| Blue | 17 |  7, 8 |
+| Infrared | 18 |  8 |
 
 
 ### Extra bytes
