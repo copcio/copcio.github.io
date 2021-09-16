@@ -46,6 +46,7 @@ Four key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is 
 * It *MUST* contain a COPC ``info`` VLR
 * It *MUST* contain a COPC ``hierarchy`` VLR
 * It *MUST* be stored as LAZ 1.4 (no "compatibility" mode)
+* It *MUST* contain *ONLY* LAS PDRFs 6, 7, or 8 formatted data
 * It *MUST* contain OGC WKTv1 VLR if the data has a spatial reference
 
 ## ``info`` VLR
@@ -149,6 +150,15 @@ bytes).
 
 The LAZ VLR *MUST* exist. A LAZ encoding VLR whose description is beyond the
 scope of this document.
+
+## LAS PDRFs 6, 7, or 8
+
+COPC files *MUST* contain data with *ONLY* Point Data Record Format 6, 7, or 8.
+
+* Waveform PDRFs are not supported in COPC
+* LAZ 1.4 supports selective decompression for only the "wide" PDRFs
+* Data constraints ease the permutation matrix of possibilities, especially
+  for classification bits, classification field, and availability of GPS time.
 
 ## Spatial reference VLR
 
