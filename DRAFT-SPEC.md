@@ -7,9 +7,10 @@
 3. [Implementation](#implementation)
     1. [``info`` VLR](#info-vlr)
     2. [``hierarchy`` VLR](#hierarchy-vlr)
-    3. [LAZ VLR](#laz-vlr)
-    4. [Spatial reference VLR](#spatial-reference-vlr)
-    5. [Extra bytes VLR](#extra-bytes-vlr)
+    3. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
+    4. [LAZ VLR](#laz-vlr)
+    5. [Spatial reference VLR](#spatial-reference-vlr)
+    6. [Extra bytes VLR](#extra-bytes-vlr)
 4. [Differences from EPT](#differences-from-ept)
 5. [Example Data](#example-data)
 6. [Credits](#credits)
@@ -46,6 +47,7 @@ Four key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is 
 * It *MUST* contain a COPC ``info`` VLR
 * It *MUST* contain a COPC ``hierarchy`` VLR
 * It *MUST* be stored as LAZ 1.4 (no "compatibility" mode)
+* It *MUST* contain *ONLY* LAS PDRFs 6, 7, or 8 formatted data
 * It *MUST* contain OGC WKTv1 VLR if the data has a spatial reference
 
 ## ``info`` VLR
@@ -150,6 +152,11 @@ bytes).
 The LAZ VLR *MUST* exist. A LAZ encoding VLR whose description is beyond the
 scope of this document.
 
+## LAS PDRFs 6, 7, or 8
+
+COPC files *MUST* contain data with *ONLY* ASPRS LAS Point Data Record Format 6, 7, or 8. See
+the [ASPRS LAS specification](https://github.com/ASPRSorg/LAS) for details.
+
 ## Spatial reference VLR
 
 | User ID                    | Record ID        |
@@ -208,9 +215,9 @@ designed and developed by Connor Manning of [Hobu, Inc](https://hobu.co)
 
 There is no official pronunciation of COPC. Here are some possibilities:
 
-* co-pick – `ko pɪk`
+* co-pick – `ko pIk`
 * cop-see – `kap si`
-* cop-pick – `kap pɪk`
+* cop-pick – `kap pIk`
 * see oh pee see – `si o pi si`
 
 # Reader Implementation Notes
