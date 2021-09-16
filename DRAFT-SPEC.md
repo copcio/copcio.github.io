@@ -178,27 +178,27 @@ entity names](https://pdal.io/dimensions.html) are used for specificity.
 
 | Dimension Name | Position | PDRF |
 | :-- | :--: | :--: |
-| X | 0 | 6 |
-| Y | 1 | 6 |
-| Z | 2 | 6 |
-| Intensity | 3 | 6 |
-| ReturnNumber | 4 | 6 |
-| NumberOfReturns | 5 | 6 |
-| Synthetic | 6 | 6 |
-| KeyPoint | 7 | 6 |
-| Withheld | 8 | 6 |
-| Overlap | 9 | 6 |
-| ScanChannel | 10 | 6 |
-| EdgeOfFlightLine | 11 | 6 |
-| Classification | 12 | 6 |
-| UserData | 13 | 6 |
-| ScanAngleRank | 14 | 6 |
-| PointSourceId | 15 | 6 |
-| GpsTime | 16 | 6 |
-| Red | 17 | 6, 7 |
-| Green | 18 | 6, 7 |
-| Blue | 19 | 6, 7 |
-| Infrared | 20 | 6, 7, 8 |
+| X | 0 | 6, 7, 8 |
+| Y | 1 | 6, 7, 8 |
+| Z | 2 | 6, 7, 8 |
+| Intensity | 3 | 6, 7, 8 |
+| ReturnNumber | 4 | 6, 7, 8 |
+| NumberOfReturns | 5 | 6, 7, 8 |
+| Synthetic | 6 | 6, 7, 8 |
+| KeyPoint | 7 | 6, 7, 8 |
+| Withheld | 8 | 6, 7, 8 |
+| Overlap | 9 | 6, 7, 8 |
+| ScanChannel | 10 | 6, 7, 8 |
+| EdgeOfFlightLine | 11 | 6, 7, 8 |
+| Classification | 12 | 6, 7, 8 |
+| UserData | 13 | 6, 7, 8 |
+| ScanAngleRank | 14 | 6, 7, 8 |
+| PointSourceId | 15 | 6, 7, 8 |
+| GpsTime | 16 | 6, 7, 8 |
+| Red | 17 |  6, 7 |
+| Green | 18 |  6, 7 |
+| Blue | 19 |  6, 7 |
+| Infrared | 20 |  8 |
 
 
 #### Extra bytes
