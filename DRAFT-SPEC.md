@@ -7,10 +7,11 @@
 3. [Implementation](#implementation)
     1. [``info`` VLR](#info-vlr)
     2. [``hierarchy`` VLR](#hierarchy-vlr)
-    3. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
-    4. [LAZ VLR](#laz-vlr)
-    5. [Spatial reference VLR](#spatial-reference-vlr)
-    6. [Extra bytes VLR](#extra-bytes-vlr)
+    3. [``stats`` VLR](#stats-vlr)
+    4. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
+    5. [LAZ VLR](#laz-vlr)
+    6. [Spatial reference VLR](#spatial-reference-vlr)
+    7. [Extra bytes VLR](#extra-bytes-vlr)
 4. [Differences from EPT](#differences-from-ept)
 5. [Example Data](#example-data)
 6. [Credits](#credits)
@@ -142,6 +143,85 @@ bytes).
     {
         Entry entries[page_size / 32];
     };
+
+
+## ``stats`` VLR
+
+| User ID                    | Record ID        |
+| -------------------------- | ---------------- |
+| ``entwine``                | ``10000``        |
+
+Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``stats`` VLR.
+
+
+
+    struct CopcStatistic
+    {
+        double minimum;
+        double maximum;
+        double mean;
+        double variance;
+    }
+
+
+### Ordering
+
+The VLR body *MUST* contain a ``CopcStatistic`` entry for each dimension in
+order they appear according to the LAS PDRF and any [Extra bytes
+VLR](extra-bytes-VLR), with the exception that `CopcStatistic` entries be
+provided for each of the four Classification Flag items.  [PDAL dimension
+entity names](https://pdal.io/dimensions.html) are used for specificity.
+
+#### PDRF 6
+
+<style>
+.stats-table {
+    width: 70%;
+    text-align: center;
+}
+.stats-table th {
+background: #D3D3D3;
+word-wrap: break-word;
+text-align: center;
+}
+.stats-table tr:nth-child(n+1):nth-child(-n+17) { background: #FFFFFF; }
+.stats-table tr:nth-child(n+18):nth-child(-n+20) { background: #98FB98; }
+.stats-table tr:nth-child(n+21):nth-child(-n+22) { background: #FFA07A; }
+</style>
+
+<div class="stats-table">
+
+| Dimension Name | Position | PDRF |
+| :-- | :--: | :--: |
+| X | 0 | 6 |
+| Y | 1 | 6 |
+| Z | 2 | 6 |
+| Intensity | 3 | 6 |
+| ReturnNumber | 4 | 6 |
+| NumberOfReturns | 5 | 6 |
+| Synthetic | 6 | 6 |
+| KeyPoint | 7 | 6 |
+| Withheld | 8 | 6 |
+| Overlap | 9 | 6 |
+| ScanChannel | 10 | 6 |
+| EdgeOfFlightLine | 11 | 6 |
+| Classification | 12 | 6 |
+| UserData | 13 | 6 |
+| ScanAngleRank | 14 | 6 |
+| PointSourceId | 15 | 6 |
+| GpsTime | 16 | 6 |
+| Red | 17 | 6, 7 |
+| Green | 18 | 6, 7 |
+| Blue | 19 | 6, 7 |
+| Infrared | 20 | 6, 7, 8 |
+
+</div>
+
+#### Extra bytes
+
+Each extra bytes item *MUST* contain corresponding ``CopcStatistic`` item in the
+order defined by the [Extra bytes VLR](extra-bytes-vlr).
+
 
 ## LAZ VLR
 
