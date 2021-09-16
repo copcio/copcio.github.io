@@ -173,12 +173,15 @@ Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``stats
 
 ### Ordering
 
-The VLR body *MUST* contain a ``CopcStatistic`` entry for each dimension except X, Y, and Z, whose stats
-are in the LAS header, in
-order they appear according to the LAS PDRF and any [Extra bytes
-VLR](extra-bytes-VLR), with the exception that `CopcStatistic` entries be
-additionally provided for each of the four Classification Flag items.  [PDAL dimension
-entity names](https://pdal.io/dimensions.html) are used for specificity.
+The VLR body *MUST* contain a ``CopcStatistic`` entry for each dimension.  X,
+Y, and Z, whose stats are in the LAS header, *MUST NOT* be included in the VLR.
+``CopcStatistic`` entries for each dimension should appear in order according
+to the LAS PDRF and any [Extra bytes VLR](extra-bytes-VLR), except
+to include additional `CopcStatistic` entries for each of the four
+Classification Flag items.
+
+[PDAL dimension entity
+names](https://pdal.io/dimensions.html) are used for specificity.
 
 
 | Dimension Name | Position | PDRF |
