@@ -174,22 +174,7 @@ entity names](https://pdal.io/dimensions.html) are used for specificity.
 
 #### PDRF 6
 
-<style>
-.stats-table {
-    width: 70%;
-    text-align: center;
-}
-.stats-table th {
-background: #D3D3D3;
-word-wrap: break-word;
-text-align: center;
-}
-.stats-table tr:nth-child(n+1):nth-child(-n+17) { background: #FFFFFF; }
-.stats-table tr:nth-child(n+18):nth-child(-n+20) { background: #98FB98; }
-.stats-table tr:nth-child(n+21):nth-child(-n+22) { background: #FFA07A; }
-</style>
 
-<div class="stats-table">
 
 | Dimension Name | Position | PDRF |
 | :-- | :--: | :--: |
@@ -215,7 +200,6 @@ text-align: center;
 | Blue | 19 | 6, 7 |
 | Infrared | 20 | 6, 7, 8 |
 
-</div>
 
 #### Extra bytes
 
