@@ -7,9 +7,10 @@
 3. [Implementation](#implementation)
     1. [``info`` VLR](#info-vlr)
     2. [``hierarchy`` VLR](#hierarchy-vlr)
-    3. [LAZ VLR](#laz-vlr)
-    4. [Spatial reference VLR](#spatial-reference-vlr)
-    5. [Extra bytes VLR](#extra-bytes-vlr)
+    3. [LAS PDRFs 6, 7, or 8](#las-pdrfs-6-7-or-8)
+    4. [LAZ VLR](#laz-vlr)
+    5. [Spatial reference VLR](#spatial-reference-vlr)
+    6. [Extra bytes VLR](#extra-bytes-vlr)
 4. [Differences from EPT](#differences-from-ept)
 5. [Example Data](#example-data)
 6. [Credits](#credits)
@@ -155,11 +156,6 @@ scope of this document.
 
 COPC files *MUST* contain data with *ONLY* Point Data Record Format 6, 7, or 8.
 
-* Waveform PDRFs are not supported in COPC
-* LAZ 1.4 supports selective decompression for only the "wide" PDRFs
-* Data constraints ease the permutation matrix of possibilities, especially
-  for classification bits, classification field, and availability of GPS time.
-
 ## Spatial reference VLR
 
 | User ID                    | Record ID        |
@@ -218,9 +214,9 @@ designed and developed by Connor Manning of [Hobu, Inc](https://hobu.co)
 
 There is no official pronunciation of COPC. Here are some possibilities:
 
-* co-pick – `ko pɪk`
+* co-pick – `ko pIk`
 * cop-see – `kap si`
-* cop-pick – `kap pɪk`
+* cop-pick – `kap pIk`
 * see oh pee see – `si o pi si`
 
 # Reader Implementation Notes
