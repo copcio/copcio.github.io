@@ -173,7 +173,8 @@ Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``stats
 
 ### Ordering
 
-The VLR body *MUST* contain a ``CopcStatistic`` entry for each dimension in
+The VLR body *MUST* contain a ``CopcStatistic`` entry for each dimension except X, Y, and Z, whose stats
+are in the LAS header, in
 order they appear according to the LAS PDRF and any [Extra bytes
 VLR](extra-bytes-VLR), with the exception that `CopcStatistic` entries be
 additionally provided for each of the four Classification Flag items.  [PDAL dimension
@@ -182,27 +183,24 @@ entity names](https://pdal.io/dimensions.html) are used for specificity.
 
 | Dimension Name | Position | PDRF |
 | :-- | :--: | :--: |
-| X | 0 | 6, 7, 8 |
-| Y | 1 | 6, 7, 8 |
-| Z | 2 | 6, 7, 8 |
-| Intensity | 3 | 6, 7, 8 |
-| ReturnNumber | 4 | 6, 7, 8 |
-| NumberOfReturns | 5 | 6, 7, 8 |
-| Synthetic | 6 | 6, 7, 8 |
-| KeyPoint | 7 | 6, 7, 8 |
-| Withheld | 8 | 6, 7, 8 |
-| Overlap | 9 | 6, 7, 8 |
-| ScanChannel | 10 | 6, 7, 8 |
-| EdgeOfFlightLine | 11 | 6, 7, 8 |
-| Classification | 12 | 6, 7, 8 |
-| UserData | 13 | 6, 7, 8 |
-| ScanAngleRank | 14 | 6, 7, 8 |
-| PointSourceId | 15 | 6, 7, 8 |
-| GpsTime | 16 | 6, 7, 8 |
-| Red | 17 |  7, 8 |
-| Green | 18 |  7, 8 |
-| Blue | 19 |  7, 8 |
-| Infrared | 20 |  8 |
+| Intensity | 0 | 6, 7, 8 |
+| ReturnNumber | 1 | 6, 7, 8 |
+| NumberOfReturns | 2 | 6, 7, 8 |
+| Synthetic | 3 | 6, 7, 8 |
+| KeyPoint | 4 | 6, 7, 8 |
+| Withheld | 5 | 6, 7, 8 |
+| Overlap | 6 | 6, 7, 8 |
+| ScanChannel | 7 | 6, 7, 8 |
+| EdgeOfFlightLine | 8 | 6, 7, 8 |
+| Classification | 9 | 6, 7, 8 |
+| UserData | 10 | 6, 7, 8 |
+| ScanAngleRank | 11 | 6, 7, 8 |
+| PointSourceId | 12 | 6, 7, 8 |
+| GpsTime | 13 | 6, 7, 8 |
+| Red | 14 |  7, 8 |
+| Green | 15 |  7, 8 |
+| Blue | 16 |  7, 8 |
+| Infrared | 17 |  8 |
 
 
 ### Extra bytes
