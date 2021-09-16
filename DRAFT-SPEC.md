@@ -5,13 +5,14 @@
 1. [Introduction](#introduction)
 2. [Notation](#notation)
 3. [Implementation](#implementation)
-    1. [``info`` VLR](#info-vlr)
-    2. [``hierarchy`` VLR](#hierarchy-vlr)
-    3. [``stats`` VLR](#stats-vlr)
-    4. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
-    5. [LAZ VLR](#laz-vlr)
-    6. [Spatial reference VLR](#spatial-reference-vlr)
-    7. [Extra bytes VLR](#extra-bytes-vlr)
+    1. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
+    2. [``info`` VLR](#info-vlr)
+    3. [``hierarchy`` VLR](#hierarchy-vlr)
+    4. [``stats`` VLR](#stats-vlr)
+    5. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
+    6. [LAZ VLR](#laz-vlr)
+    7. [Spatial reference VLR](#spatial-reference-vlr)
+    8. [Extra bytes VLR](#extra-bytes-vlr)
 4. [Differences from EPT](#differences-from-ept)
 5. [Example Data](#example-data)
 6. [Credits](#credits)
@@ -45,11 +46,19 @@ using the same notation.
 
 Four key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is unorganized:
 
+* It *MUST* contain *ONLY* LAS PDRFs 6, 7, or 8 formatted data
 * It *MUST* contain a COPC ``info`` VLR
 * It *MUST* contain a COPC ``hierarchy`` VLR
+* It *MUST* contain a COPC ``stats`` VLR
 * It *MUST* be stored as LAZ 1.4 (no "compatibility" mode)
 * It *MUST* contain *ONLY* LAS PDRFs 6, 7, or 8 formatted data
 * It *MUST* contain OGC WKTv1 VLR if the data has a spatial reference
+
+
+## LAS PDRFs 6, 7, or 8
+
+COPC files *MUST* contain data with *ONLY* ASPRS LAS Point Data Record Format 6, 7, or 8. See
+the [ASPRS LAS specification](https://github.com/ASPRSorg/LAS) for details.
 
 ## ``info`` VLR
 
@@ -172,9 +181,6 @@ VLR](extra-bytes-VLR), with the exception that `CopcStatistic` entries be
 provided for each of the four Classification Flag items.  [PDAL dimension
 entity names](https://pdal.io/dimensions.html) are used for specificity.
 
-#### PDRF 6
-
-
 
 | Dimension Name | Position | PDRF |
 | :-- | :--: | :--: |
@@ -201,7 +207,7 @@ entity names](https://pdal.io/dimensions.html) are used for specificity.
 | Infrared | 20 |  8 |
 
 
-#### Extra bytes
+### Extra bytes
 
 Each extra bytes item *MUST* contain corresponding ``CopcStatistic`` item in the
 order defined by the [Extra bytes VLR](extra-bytes-vlr).
@@ -216,10 +222,6 @@ order defined by the [Extra bytes VLR](extra-bytes-vlr).
 The LAZ VLR *MUST* exist. A LAZ encoding VLR whose description is beyond the
 scope of this document.
 
-## LAS PDRFs 6, 7, or 8
-
-COPC files *MUST* contain data with *ONLY* ASPRS LAS Point Data Record Format 6, 7, or 8. See
-the [ASPRS LAS specification](https://github.com/ASPRSorg/LAS) for details.
 
 ## Spatial reference VLR
 
