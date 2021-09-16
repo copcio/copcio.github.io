@@ -176,7 +176,7 @@ Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``stats
 The VLR body *MUST* contain a ``CopcStatistic`` entry for each dimension in
 order they appear according to the LAS PDRF and any [Extra bytes
 VLR](extra-bytes-VLR), with the exception that `CopcStatistic` entries be
-provided for each of the four Classification Flag items.  [PDAL dimension
+additionally provided for each of the four Classification Flag items.  [PDAL dimension
 entity names](https://pdal.io/dimensions.html) are used for specificity.
 
 
