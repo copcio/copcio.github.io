@@ -7,7 +7,7 @@
 3. [Implementation](#implementation)
     1. [``info`` VLR](#info-vlr)
     2. [``hierarchy`` VLR](#hierarchy-vlr)
-    3. [LAS PDRFs 6, 7, or 8](#las-pdrfs-6-7-or-8)
+    3. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
     4. [LAZ VLR](#laz-vlr)
     5. [Spatial reference VLR](#spatial-reference-vlr)
     6. [Extra bytes VLR](#extra-bytes-vlr)
@@ -154,7 +154,8 @@ scope of this document.
 
 ## LAS PDRFs 6, 7, or 8
 
-COPC files *MUST* contain data with *ONLY* Point Data Record Format 6, 7, or 8.
+COPC files *MUST* contain data with *ONLY* ASPRS LAS Point Data Record Format 6, 7, or 8. See
+the [ASPRS LAS specification](https://github.com/ASPRSorg/LAS) for details.
 
 ## Spatial reference VLR
 
