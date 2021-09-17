@@ -8,7 +8,7 @@
     1. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
     2. [``info`` VLR](#info-vlr)
     3. [``hierarchy`` VLR](#hierarchy-vlr)
-    4. [``stats`` VLR](#stats-vlr)
+    4. [``extents`` VLR](#extents-vlr)
     5. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
     6. [LAZ VLR](#laz-vlr)
     7. [Spatial reference VLR](#spatial-reference-vlr)
@@ -49,7 +49,7 @@ Four key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is 
 * It *MUST* contain *ONLY* LAS PDRFs 6, 7, or 8 formatted data
 * It *MUST* contain a COPC ``info`` VLR
 * It *MUST* contain a COPC ``hierarchy`` VLR
-* It *MUST* contain a COPC ``stats`` VLR
+* It *MUST* contain a COPC ``extents`` VLR
 * It *MUST* be stored as LAZ 1.4 (no "compatibility" mode)
 * It *MUST* contain *ONLY* LAS PDRFs 6, 7, or 8 formatted data
 * It *MUST* contain OGC WKTv1 VLR if the data has a spatial reference
@@ -154,17 +154,17 @@ bytes).
     };
 
 
-## ``stats`` VLR
+## ``extents`` VLR
 
 | User ID                    | Record ID        |
 | -------------------------- | ---------------- |
 | ``entwine``                | ``10000``        |
 
-Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``stats`` VLR.
+Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``extents`` VLR.
 
 
 
-    struct CopcStatistic
+    struct CopcExtent
     {
         double minimum;
         double maximum;
@@ -173,11 +173,11 @@ Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``stats
 
 ### Ordering
 
-The VLR body *MUST* contain a ``CopcStatistic`` entry for each dimension.  X,
+The VLR body *MUST* contain a ``CopcExtent`` entry for each dimension.  X,
 Y, and Z, whose stats are in the LAS header, *MUST NOT* be included in the VLR.
-``CopcStatistic`` entries for each dimension should appear in order according
+``CopcExtent`` entries for each dimension should appear in order according
 to the LAS PDRF and any [Extra bytes VLR](extra-bytes-VLR), except
-to include additional `CopcStatistic` entries for each of the four
+to include additional `CopcExtent` entries for each of the four
 Classification Flag items.
 
 
@@ -186,27 +186,23 @@ Classification Flag items.
 | Intensity | 0 | 6, 7, 8 |
 | Return Number | 1 | 6, 7, 8 |
 | Number of Returns | 2 | 6, 7, 8 |
-| Synthetic | 3 | 6, 7, 8 |
-| KeyPoint | 4 | 6, 7, 8 |
-| Withheld | 5 | 6, 7, 8 |
-| Overlap | 6 | 6, 7, 8 |
-| Scanner Channel | 7 | 6, 7, 8 |
-| Scan Direction Flag | 8 | 6, 7, 8 |
-| Edge of Flight Line | 9 | 6, 7, 8 |
-| Classification | 10 | 6, 7, 8 |
-| User Data | 11 | 6, 7, 8 |
-| Scan Angle | 12 | 6, 7, 8 |
-| Point Source ID | 13 | 6, 7, 8 |
-| GPS Time | 14 | 6, 7, 8 |
-| Red | 15 |  7, 8 |
-| Green | 16 |  7, 8 |
-| Blue | 17 |  7, 8 |
-| Infrared | 18 |  8 |
+| Scanner Channel | 3 | 6, 7, 8 |
+| Scan Direction Flag | 4 | 6, 7, 8 |
+| Edge of Flight Line | 5 | 6, 7, 8 |
+| Classification | 6 | 6, 7, 8 |
+| User Data | 7  | 6, 7, 8 |
+| Scan Angle | 8 | 6, 7, 8 |
+| Point Source ID | 9 | 6, 7, 8 |
+| GPS Time | 10 | 6, 7, 8 |
+| Red | 11 |  7, 8 |
+| Green | 12 |  7, 8 |
+| Blue | 13 |  7, 8 |
+| Infrared | 14 |  8 |
 
 
 ### Extra bytes
 
-Each extra bytes item *MUST* contain corresponding ``CopcStatistic`` item in the
+Each extra bytes item *MUST* contain corresponding ``CopcExtent`` item in the
 order defined by the [Extra bytes VLR](extra-bytes-vlr).
 
 
