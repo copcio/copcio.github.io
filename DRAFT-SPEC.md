@@ -1,5 +1,6 @@
 # ***DRAFT*** Cloud Optimized Point Cloud Specification ***DRAFT***
 
+![COPC Logo](COPC_IO-Logo-2color-white-background.png)
 
 # Table of contents
 1. [Introduction](#introduction)
