@@ -68,16 +68,58 @@ begin at offset ``375``. The data described below *MUST* begin at offset ``429``
 
     struct CopcInfo
     {
-      int64_t span;                 // Number of voxels in each spatial dimension (typically powers of 2)
-      uint64_t root_hier_offset;    // File offset to the first hierarchy page
-      uint64_t root_hier_size;      // Size of the first hierarchy page in bytes
-      uint64_t laz_vlr_offset;      // File offset of the *data* of the LAZ VLR
-      uint64_t laz_vlr_size;        // Size of the *data* of the LAZ VLR.
-      uint64_t wkt_vlr_offset;      // File offset of the *data* of the WKT VLR if it exists, 0 otherwise
-      uint64_t wkt_vlr_size;        // Size of the *data* of the WKT VLR if it exists, 0 otherwise
-      uint64_t eb_vlr_offset;       // File offset of the *data* of the extra bytes VLR if it exists, 0 otherwise
-      uint64_t eb_vlr_size;         // Size of the *data* of the extra bytes VLR if it exists, 0 otherwise
-      uint64_t reserved[11];        // Reserved for future use. Must be 0.
+      // Space between points at the root node.
+      // This value is halved at each octree level
+      double spacing;
+
+      // File offset to the first hierarchy page
+      uint64_t root_hier_offset;
+
+      // Size of the first hierarchy page in bytes
+      uint64_t root_hier_size;
+
+      // File offset of the *data* of the LAZ VLR
+      uint64_t laz_vlr_offset;
+
+      // Size of the *data* of the LAZ VLR.
+      uint64_t laz_vlr_size;
+
+      // File offset of the *data* of the WKT VLR if it exists,
+      // 0 otherwise
+      uint64_t wkt_vlr_offset;
+
+      // Size of the *data* of the WKT VLR if it exists,
+      // 0 otherwise
+      uint64_t wkt_vlr_size;
+
+      // File offset of the *data* of the extra bytes VLR if it exists,
+      // 0 otherwise
+      uint64_t eb_vlr_offset;
+
+      // Size of the *data* of the extra bytes VLR if it exists,
+      // 0 otherwise
+      uint64_t eb_vlr_size;
+
+      // File offset of the *data* of the stats VLR
+      uint64_t extent_vlr_offset {0};
+
+      // Size of the *data* of the stats VLR
+      uint64_t extent_vlr_size {0};
+
+      // X coordinate of center of octree
+      double center_x {0.0};
+
+      // Y coordinate of center of octree
+      double center_y {0.0};
+
+      // Z coordinate of center of octree
+      double center_z {0.0};
+
+      // halfsize of octree.
+      double halfsize {0.0};
+
+      // Reserved for future use. Must be 0.
+      uint64_t reserved[5];
     };
 
 
