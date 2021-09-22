@@ -55,7 +55,7 @@ Four key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is 
 
 | User ID                    | Record ID        |
 | -------------------------- | ---------------- |
-| ``entwine``                | ``1``            |
+| ``copc``                   | ``1``            |
 
 The ``info`` VLR *MUST* exist.
 
@@ -86,7 +86,7 @@ begin at offset ``375``. The data described below *MUST* begin at offset ``429``
 
 | User ID                    | Record ID        |
 | -------------------------- | ---------------- |
-| ``entwine``                | ``1000``         |
+| ``copc``                   | ``1000``         |
 
 The ``hierarchy`` VLR *MUST* exist.
 
