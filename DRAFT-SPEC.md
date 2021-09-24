@@ -173,31 +173,31 @@ Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``exten
 
 ### Ordering
 
-The VLR body *MUST* contain a ``CopcExtent`` entry for each dimension.  X,
-Y, and Z, whose stats are in the LAS header, *MUST NOT* be included in the VLR.
-``CopcExtent`` entries for each dimension should appear in order according
-to the LAS PDRF and any [Extra bytes VLR](extra-bytes-VLR), except
-to include additional `CopcExtent` entries for each of the four
-Classification Flag items.
+The VLR body *MUST* contain a ``CopcExtent`` entry for each dimension. including X,
+Y, and Z, whose stats are in the LAS header, *AND* ``CopcExtent`` entries for
+each [Extra bytes Dimension](extra-bytes-VLR).
 
 
 | Dimension Name | Position | PDRF |
 | :-- | :--: | :--: |
-| Intensity | 0 | 6, 7, 8 |
-| Return Number | 1 | 6, 7, 8 |
-| Number of Returns | 2 | 6, 7, 8 |
-| Scanner Channel | 3 | 6, 7, 8 |
-| Scan Direction Flag | 4 | 6, 7, 8 |
-| Edge of Flight Line | 5 | 6, 7, 8 |
-| Classification | 6 | 6, 7, 8 |
-| User Data | 7  | 6, 7, 8 |
-| Scan Angle | 8 | 6, 7, 8 |
-| Point Source ID | 9 | 6, 7, 8 |
-| GPS Time | 10 | 6, 7, 8 |
-| Red | 11 |  7, 8 |
-| Green | 12 |  7, 8 |
-| Blue | 13 |  7, 8 |
-| Infrared | 14 |  8 |
+| X | 0 | 6, 7, 8 |
+| Y | 1 | 6, 7, 8 |
+| Z | 2 | 6, 7, 8 |
+| Intensity | 3 | 6, 7, 8 |
+| Return Number | 4 | 6, 7, 8 |
+| Number of Returns | 5 | 6, 7, 8 |
+| Scanner Channel | 6 | 6, 7, 8 |
+| Scan Direction Flag | 7 | 6, 7, 8 |
+| Edge of Flight Line | 8 | 6, 7, 8 |
+| Classification | 9 | 6, 7, 8 |
+| User Data | 10  | 6, 7, 8 |
+| Scan Angle | 11 | 6, 7, 8 |
+| Point Source ID | 12 | 6, 7, 8 |
+| GPS Time | 13 | 6, 7, 8 |
+| Red | 14 |  7, 8 |
+| Green | 15 |  7, 8 |
+| Blue | 16 |  7, 8 |
+| Infrared | 17 |  8 |
 
 
 ### Extra bytes
