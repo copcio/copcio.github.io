@@ -158,7 +158,7 @@ bytes).
 
 | User ID                    | Record ID        |
 | -------------------------- | ---------------- |
-| ``entwine``                | ``10000``        |
+| ``copc``                   | ``10000``        |
 
 Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``extents`` VLR.
 
