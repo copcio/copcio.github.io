@@ -313,7 +313,7 @@ provided in the hierarchy entries, allowing the chunks to be directly read for d
 * Increase the size of the COPC VLR data structure to 160 bytes.
 * Add `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size`,
   `eb_vlr_offset`, `eb_vlr_size` to the COPC VLR, replacing 6 `reserved` entries.
-
 * PDRF must be 6, 7, or 8
 * Add `extents` VLR.
+* VLR UserIDs switched from `entwine` to `copc`
 
