@@ -64,7 +64,7 @@ the [ASPRS LAS specification](https://github.com/ASPRSorg/LAS) for details.
 
 | User ID                    | Record ID        |
 | -------------------------- | ---------------- |
-| ``entwine``                | ``1``            |
+| ``copc``                   | ``1``            |
 
 The ``info`` VLR *MUST* exist.
 
@@ -95,7 +95,7 @@ begin at offset ``375``. The data described below *MUST* begin at offset ``429``
 
 | User ID                    | Record ID        |
 | -------------------------- | ---------------- |
-| ``entwine``                | ``1000``         |
+| ``copc``                   | ``1000``         |
 
 The ``hierarchy`` VLR *MUST* exist.
 
@@ -158,7 +158,7 @@ bytes).
 
 | User ID                    | Record ID        |
 | -------------------------- | ---------------- |
-| ``entwine``                | ``10000``        |
+| ``copc``                   | ``10000``        |
 
 Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``extents`` VLR.
 
@@ -313,7 +313,7 @@ provided in the hierarchy entries, allowing the chunks to be directly read for d
 * Increase the size of the COPC VLR data structure to 160 bytes.
 * Add `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size`,
   `eb_vlr_offset`, `eb_vlr_size` to the COPC VLR, replacing 6 `reserved` entries.
-
 * PDRF must be 6, 7, or 8
 * Add `extents` VLR.
+* VLR UserIDs switched from `entwine` to `copc`
 
