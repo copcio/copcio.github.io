@@ -45,14 +45,13 @@ using the same notation.
 
 # Implementation
 
-Four key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is unorganized:
+Key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is unorganized:
 
 * It *MUST* contain *ONLY* LAS PDRFs 6, 7, or 8 formatted data
 * It *MUST* contain a COPC ``info`` VLR
 * It *MUST* contain a COPC ``hierarchy`` VLR
 * It *MUST* contain a COPC ``extents`` VLR
 * It *MUST* be stored as LAZ 1.4 (no "compatibility" mode)
-* It *MUST* contain *ONLY* LAS PDRFs 6, 7, or 8 formatted data
 * It *MUST* contain OGC WKTv1 VLR if the data has a spatial reference
 
 
@@ -315,4 +314,6 @@ provided in the hierarchy entries, allowing the chunks to be directly read for d
 * Add `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size`,
   `eb_vlr_offset`, `eb_vlr_size` to the COPC VLR, replacing 6 `reserved` entries.
 
+* PDRF must be 6, 7, or 8
+* Add `extents` VLR.
 
