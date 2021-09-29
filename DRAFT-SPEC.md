@@ -129,18 +129,22 @@ point data.
       // EPT key of the data to which this entry corresponds
       VoxelKey key;
 
-      // Absolute offset to the data chunk, or absolute offset to a child hierarchy page
-      // if the pointCount is -1
+      // Absolute offset to the data chunk if the pointCount > 0.
+      // Absolute offset to a child hierarchy page if the pointCount is -1.
+      // 0 if the pointCount is 0.
       uint64_t offset;
 
-      // Size of the data chunk in bytes (compressed size) or size of the child hierarchy page if
-      // the pointCount is -1
+      // Size of the data chunk in bytes (compressed size) if the pointCount > 0.
+      // Size of the hierarchy page if the pointCount is -1.
+      // 0 if the pointCount is 0.
       int32_t byteSize;
 
-      // Number of points in the data chunk, or -1 if the information
-      // for this octree node and its descendants is contained in other hierarchy pages
+      // If > 0, represents the number of points in the data chunk.
+      // If -1, indicates the information for this octree node is found in another hierarchy page.
+      // If 0, no point data exists for this key, though may exist for child entries.
       int32_t pointCount;
     }
+
 
 The entries of a hierarchy page are consecutive. The number of entries in a
 page can be determined by taking the size of the page (contained in the parent
@@ -316,4 +320,4 @@ provided in the hierarchy entries, allowing the chunks to be directly read for d
 * PDRF must be 6, 7, or 8
 * Add `extents` VLR.
 * VLR UserIDs switched from `entwine` to `copc`
-
+* Describe hierarchy entries for empty octree nodes.
