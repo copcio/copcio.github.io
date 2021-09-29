@@ -18,10 +18,10 @@
     9. [Versioning](#versioning)
 5. [Differences from EPT](#differences-from-ept)
 6. [Example Data](#example-data)
-7. [Credits](#credits)
-8. [Pronunciation](#pronunciation)
-9. [Discussion](#discussion)
-10. [Reader Implementation Notes](#reader-implementation-notes)
+7. [Reader Implementation Nodes](#reader-implementation-notes)
+8. [Credits](#credits)
+9. [Pronunciation](#pronunciation)
+10. [Discussion](#discussion)
 11. [Structural Changes to Draft Specification](#structural-changes-to-draft-specification)
 
 
@@ -75,6 +75,8 @@ the [ASPRS LAS specification](https://github.com/ASPRSorg/LAS) for details.
 | ``copc``                   | ``1``            |
 
 The ``info`` VLR *MUST* exist.
+
+The ``info`` VLR *MUST* be the **first** VLR in the file after the header.
 
 The ``info`` VLR *MAY* be used by software clients to know the details of the
 ``hierarchy`` VLR.
@@ -287,6 +289,29 @@ VLRs as needed to support future needs.
   Center of Expertise](https://www.erdc.usace.army.mil/Locations/CRREL/) /
   [National Center for Airborne Laser Mapping](http://ncalm.cive.uh.edu/)
 
+# Reader Implementation Nodes
+
+COPC is designed so that a reader needs to know little about the structure of a LAZ file.
+By reading the first 549 bytes (375 for the header + 54 for the COPC VLR header + 160
+for the COPC VLR), the software can verify that the file is a COPC file and determine
+the point data record format and point data record length, both of which are necessary
+to create a LAZ decompressor.
+
+Readers should:
+* verify that the first four bytes of the file contain the ASCII characters "LASF".
+* verify that the 7 bytes starting offset 377 contain the characters `copc`.
+* verify that the bytes at offsets 393 and 394 contain the values 1 and 0,
+  respectively (this is the COPC version number, 1).
+* determine the point data record format by reading the byte at offset 104, masking off the
+  two high bits, which are used by LAZ to indicate compression, and can be ignored.
+* determine the point data record length by reading two bytes at offset 105.
+
+The octree hierarchy is arranged in pages. The COPC VLR provides information pointing to
+root page. When reading data from a network connection, information in each page will
+be used to traverse to child pages.  Each entry in a hierarchy page either refers to a
+child hierarchy page or a data chunk. The size and file offset of each data chunk is
+provided in the hierarchy entries, allowing the chunks to be directly read for decoding.
+
 # Credits
 
 COPC was designed in July–September 2021 by Andrew Bell, Howard Butler, and Connor
@@ -370,6 +395,5 @@ data.
 * PDRF must be 6, 7, or 8
 * Add `extents` VLR.
 * VLR UserIDs switched from `entwine` to `copc`
-* Removed offsets in `info` VLR. Removed restriction on `info` VLR having to be the *first* VLR
-* Removed Reader Implementation notes.
+* Removed offsets in `info` VLR.
 
