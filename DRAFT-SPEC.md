@@ -15,7 +15,6 @@
     6. [LAZ VLR](#laz-vlr)
     7. [Spatial reference VLR](#spatial-reference-vlr)
     8. [Extra bytes VLR](#extra-bytes-vlr)
-    9. [Versioning](#versioning)
 5. [Differences from EPT](#differences-from-ept)
 6. [Example Data](#example-data)
 7. [Reader Implementation Nodes](#reader-implementation-notes)
@@ -257,13 +256,6 @@ their presence is allowed.
 
 An Extra Bytes VLR containing that information *MUST* be present
 if extra per-point data is provided.
-
-## Versioning
-
-Should any future incremental versioning of COPC occur, is expected to utilize VLR
-definitions with incremented ``Record ID`` values as the discrimination mechanism. It *MAY*
-be possible to write COPC data with simultaneous definitions of `info`, `hierarchy` or `extents`
-VLRs as needed to support future needs.
 
 # Differences from EPT
 
