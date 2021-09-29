@@ -27,19 +27,19 @@ jobs:
     - name: HTML
       shell: bash -l {0}
       run: |
-        pandoc -s DRAFT-SPEC.md -o DRAFT-SPEC.html
+        pandoc -s README.md -o README.html
 
     - name: PDF
       shell: bash -l {0}
       run: |
-        pandoc -s DRAFT-SPEC.md -o DRAFT-SPEC.pdf  --latex-engine=xelatex
+        pandoc -s README.md -o README.pdf  --latex-engine=xelatex
 
     - uses: actions/upload-artifact@v2
       with:
         name: PDF
-        path: DRAFT-SPEC.pdf
+        path: README.pdf
     - uses: actions/upload-artifact@v2
       with:
         name: HTML
-        path: DRAFT-SPEC.html
+        path: README.html
 
