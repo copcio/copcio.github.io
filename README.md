@@ -55,12 +55,12 @@ using the same notation.
 
 Key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is unorganized:
 
-* It *MUST* contain *ONLY* LAS PDRFs 6, 7, or 8 formatted data
-* It *MUST* contain a COPC ``info`` VLR
-* It *MUST* contain a COPC ``hierarchy`` VLR
-* It *MUST* contain a COPC ``extents`` VLR
-* It *MUST* be stored as LAZ 1.4 (no "compatibility" mode)
-* It *MUST* contain OGC WKTv1 VLR if the data has a spatial reference
+* It *MUST* contain *ONLY* [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
+* It *MUST* contain a COPC [``info`` VLR](#info-vlr)
+* It *MUST* contain a COPC [``hierarchy`` VLR](#hierarchy-vlr)
+* It *MUST* contain a COPC [``extents`` VLR](#extents-vlr)
+* It *MUST* be stored as[LAZ 1.4](#laz-vlr) (no "compatibility" mode)
+* It *MUST* contain [OGC WKTv1 VLR](#spatial-reference-vlr)if the data has a spatial reference
 
 
 ## LAS PDRFs 6, 7, or 8
@@ -103,8 +103,14 @@ The ``info`` VLR is ``160`` bytes described by the following structure.
       // This value is halved at each octree level
       double spacing;
 
+      // File offset to the first hierarchy page
+      uint64_t root_hier_offset;
+
+      // Size of the first hierarchy page in bytes
+      uint64_t root_hier_size;
+
       // Reserved for future use. Must be 0.
-      uint64_t reserved[15];
+      uint64_t reserved[13];
     };
 
 
@@ -119,7 +125,7 @@ The ``hierarchy`` VLR *MUST* exist.
 
 Like EPT, COPC stores hierarchy information to allow a reader to locate points
 that are in a particular octree node.  Also like EPT, the hierarchy *MAY* be
-arranged in a tree of pages, but shall always consist of at least ONE hierarchy
+arranged in a tree of pages, but *SHALL* always consist of at least ONE hierarchy
 page. Hierarchy pages are contiguous in the data.
 
 The VLR data consists of one or more hierarchy pages. Each hierarchy data page
@@ -392,3 +398,4 @@ data.
 * VLR UserIDs switched from `entwine` to `copc`
 * Removed offsets in `info` VLR.
 * Describe hierarchy entries for empty octree nodes.
+* Add back `root_hier_offset` and `root_hier_size` in `info`
