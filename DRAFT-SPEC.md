@@ -1,11 +1,12 @@
-# ***DRAFT*** Cloud Optimized Point Cloud Specification ***DRAFT***
+# ***DRAFT*** Cloud Optimized Point Cloud Specification – 1.0 **DRAFT***
 
 ![COPC Logo](COPC_IO-Logo-2color.png)
 
 # Table of contents
-1. [Introduction](#introduction)
-2. [Notation](#notation)
-3. [Implementation](#implementation)
+1. [Version](#version)
+2. [Introduction](#introduction)
+3. [Notation](#notation)
+4. [Implementation](#implementation)
     1. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
     2. [``info`` VLR](#info-vlr)
     3. [``hierarchy`` VLR](#hierarchy-vlr)
@@ -14,12 +15,18 @@
     6. [LAZ VLR](#laz-vlr)
     7. [Spatial reference VLR](#spatial-reference-vlr)
     8. [Extra bytes VLR](#extra-bytes-vlr)
-4. [Differences from EPT](#differences-from-ept)
-5. [Example Data](#example-data)
-6. [Credits](#credits)
-7. [Pronunciation](#pronunciation)
-8. [Reader Implementation Notes](#reader-implementation-notes)
-9. [Structural Changes to Draft Specification](#structural-changes-to-draft-specification)
+5. [Differences from EPT](#differences-from-ept)
+6. [Example Data](#example-data)
+7. [Reader Implementation Nodes](#reader-implementation-notes)
+8. [Credits](#credits)
+9. [Pronunciation](#pronunciation)
+10. [Discussion](#discussion)
+11. [Structural Changes to Draft Specification](#structural-changes-to-draft-specification)
+
+
+# Version
+
+This document defines Cloud Optimized Point Cloud (COPC) version **1.0**.
 
 # Introduction
 
@@ -68,25 +75,35 @@ the [ASPRS LAS specification](https://github.com/ASPRSorg/LAS) for details.
 
 The ``info`` VLR *MUST* exist.
 
+The ``info`` VLR *MUST* be the **first** VLR in the file after the header.
+
 The ``info`` VLR *MAY* be used by software clients to know the details of the
 ``hierarchy`` VLR.
 
-The ``info`` VLR is ``160`` bytes described by the following structure. ``reserved``
-elements *MUST* be set to ``0``. The ``info`` VLR *MUST* immediately follow the file header and
-begin at offset ``375``. The data described below *MUST* begin at offset ``429``.
+The ``info`` VLR is ``160`` bytes described by the following structure.
+``reserved`` elements *MUST* be set to ``0``.
 
     struct CopcInfo
     {
-      int64_t span;                 // Number of voxels in each spatial dimension (typically powers of 2)
-      uint64_t root_hier_offset;    // File offset to the first hierarchy page
-      uint64_t root_hier_size;      // Size of the first hierarchy page in bytes
-      uint64_t laz_vlr_offset;      // File offset of the *data* of the LAZ VLR
-      uint64_t laz_vlr_size;        // Size of the *data* of the LAZ VLR.
-      uint64_t wkt_vlr_offset;      // File offset of the *data* of the WKT VLR if it exists, 0 otherwise
-      uint64_t wkt_vlr_size;        // Size of the *data* of the WKT VLR if it exists, 0 otherwise
-      uint64_t eb_vlr_offset;       // File offset of the *data* of the extra bytes VLR if it exists, 0 otherwise
-      uint64_t eb_vlr_size;         // Size of the *data* of the extra bytes VLR if it exists, 0 otherwise
-      uint64_t reserved[11];        // Reserved for future use. Must be 0.
+
+      // X coordinate of center of octree
+      double center_x;
+
+      // Y coordinate of center of octree
+      double center_y;
+
+      // Z coordinate of center of octree
+      double center_z;
+
+      // halfsize of octree.
+      double halfsize;
+
+      // Space between points at the root node.
+      // This value is halved at each octree level
+      double spacing;
+
+      // Reserved for future use. Must be 0.
+      uint64_t reserved[15];
     };
 
 
@@ -240,7 +257,6 @@ their presence is allowed.
 An Extra Bytes VLR containing that information *MUST* be present
 if extra per-point data is provided.
 
-
 # Differences from EPT
 
 * COPC has no [ept.json](https://entwine.io/entwine-point-tile.html#ept-data). The information
@@ -267,9 +283,32 @@ if extra per-point data is provided.
   Center of Expertise](https://www.erdc.usace.army.mil/Locations/CRREL/) /
   [National Center for Airborne Laser Mapping](http://ncalm.cive.uh.edu/)
 
+# Reader Implementation Nodes
+
+COPC is designed so that a reader needs to know little about the structure of a LAZ file.
+By reading the first 549 bytes (375 for the header + 54 for the COPC VLR header + 160
+for the COPC VLR), the software can verify that the file is a COPC file and determine
+the point data record format and point data record length, both of which are necessary
+to create a LAZ decompressor.
+
+Readers should:
+* verify that the first four bytes of the file contain the ASCII characters "LASF".
+* verify that the 7 bytes starting offset 377 contain the characters `copc`.
+* verify that the bytes at offsets 393 and 394 contain the values 1 and 0,
+  respectively (this is the COPC version number, 1).
+* determine the point data record format by reading the byte at offset 104, masking off the
+  two high bits, which are used by LAZ to indicate compression, and can be ignored.
+* determine the point data record length by reading two bytes at offset 105.
+
+The octree hierarchy is arranged in pages. The COPC VLR provides information pointing to
+root page. When reading data from a network connection, information in each page will
+be used to traverse to child pages.  Each entry in a hierarchy page either refers to a
+child hierarchy page or a data chunk. The size and file offset of each data chunk is
+provided in the hierarchy entries, allowing the chunks to be directly read for decoding.
+
 # Credits
 
-COPC was designed in July 2021 by Andrew Bell, Howard Butler, and Connor
+COPC was designed in July–September 2021 by Andrew Bell, Howard Butler, and Connor
 Manning of [Hobu, Inc.](https://hobu.co). [Entwine](https://entwine.io) and
 [Entwine Point Tile](https://entwine.io/entwine-point-tile.html) were also
 designed and developed by Connor Manning of [Hobu, Inc](https://hobu.co)
@@ -283,30 +322,60 @@ There is no official pronunciation of COPC. Here are some possibilities:
 * cop-pick – `kap pIk`
 * see oh pee see – `si o pi si`
 
-# Reader Implementation Notes
+# Discussion
 
-COPC is designed so that a reader needs to know little about the structure of a LAZ file.
-By reading the first 549 bytes (375 for the header + 54 for the COPC VLR header + 160
-for the COPC VLR), the software can verify that the file is a COPC file and determine
-the point data record format and point data record length, both of which are necessary
-to create a LAZ decompressor.
+## Use Case
 
-Readers should:
-* verify that the first four bytes of the file contain the ASCII characters "LASF".
-* verify that the 7 bytes starting offset 377 contain the characters "entwine".
-* verify that the bytes at offsets 393 and 394 contain the values 1 and 0,
-  respectively (this is the COPC version number, 1).
-* determine the point data record format by reading the byte at offset 104, masking off the
-  two high bits, which are used by LAZ to indicate compression, and can be ignored.
-* determine the point data record length by reading two bytes at offset 105.
-* determine the offset and size of the root hierarchy page by reading the 8-byte entities
-  at offset 419 and 427, respectively.
+[Cloud Optimized GeoTIFF](https://www.cogeo.org/) has shown the utility and convenience
+of taking a dominant container format for geospatial raster data and optionally
+augmenting its organization to allow incremental "range-read" support over HTTP with it.
+With the mantra of "It's just a TIFF" allowing ubiquitous usage of the data content
+combined with the flexibility of supporting partial reads over the internet, COG has
+found a sweet spot. Its reward is the ongoing rapid conversion of significant raster data
+holdings to COG-organized content to enable convenient cloud consumption of the data
+throughout the GIS industry.
 
-The octree hierarchy is arranged in pages. The COPC VLR provides information pointing to
-root page. When reading data from a network connection, information in each page will
-be used to traverse to child pages.  Each entry in a hierarchy page either refers to a
-child hierarchy page or a data chunk. The size and file offset of each data chunk is
-provided in the hierarchy entries, allowing the chunks to be directly read for decoding.
+What is the COG for point clouds? It would need to be similar in fit and scope to
+COG:
+
+* Support incremental partial reads over HTTP
+* Provide good compression
+* Allow dimension-selective reads
+* Provide all metadata and supporting information
+* Support an [EPT](https://entwine.io/entwine-point-tile.html)-style octree organization for
+  data streaming
+
+## "Just a LAZ"
+
+LAZ (LASZip) is the ubiquitous geospatial point cloud format. It is an
+augmentation of [ASPRS LAS](https://github.com/ASPRSorg/LAS) that utilizes an
+arithmetic encoder to efficiently compress the point content. It has seen a
+number of revisions, but the latest supports dimension-selective access and
+provides all of the metadata support that normal LAS provides.  Importantly,
+multiple software implementations ([laz-rs](https://github.com/laz-rs/laz-rs),
+[laz-perf](https://github.com/hobu/laz-perf), and
+[LASzip](https://github.com/laszip/laszip)) provide LAZ compression and
+decompression, and laz-perf and laz-rs include compilation to JavaScript which
+is used by all JavaScript clients when consuming LAZ content.
+
+## Put EPT in LAZ
+
+The EPT content organization supports LAZ in its current "exploded"
+organization. Exploded in this context means that each chunk of data at each
+octree level is stored as an individual LAZ file (or simple blob, or a
+zstd-compressed blob). One consequence of the exploded organization is large
+EPT trees of data can mean collections of *millions* of files. In non-cloud
+situations, EPT's cost when moving data or deleting it can be significant. Like
+the tilesets of late 2000s raster map tiles, lots of little files are a
+problem.
+
+LAZ provides a feature that allows us to concatenate the individual LAZ files
+into a single, large LAZ file. This is the concept of a dynamically-sized chunk
+table. It is a feature that [Martin Isenburg](https://twitter.com/rapidlasso)
+envisioned for quad-tree organized data, but it could work the same for an
+octree. Additionally, this chunk table provides the lookups needed for an
+HTTP-based client to compute where to directly access and incrementally read
+data.
 
 # Structural Changes to Draft Specification
 
@@ -320,4 +389,5 @@ provided in the hierarchy entries, allowing the chunks to be directly read for d
 * PDRF must be 6, 7, or 8
 * Add `extents` VLR.
 * VLR UserIDs switched from `entwine` to `copc`
+* Removed offsets in `info` VLR.
 * Describe hierarchy entries for empty octree nodes.
