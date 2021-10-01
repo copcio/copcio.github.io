@@ -1,5 +1,7 @@
 # ***DRAFT*** Cloud Optimized Point Cloud Specification – 1.0 **DRAFT***
 
+©2021, [Hobu, Inc.](https://hobu.co) All rights reserved.
+
 ![COPC Logo](COPC_IO-Logo-2color.png)
 
 # Table of contents
@@ -11,10 +13,7 @@
     2. [``info`` VLR](#info-vlr)
     3. [``hierarchy`` VLR](#hierarchy-vlr)
     4. [``extents`` VLR](#extents-vlr)
-    5. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
-    6. [LAZ VLR](#laz-vlr)
-    7. [Spatial reference VLR](#spatial-reference-vlr)
-    8. [Extra bytes VLR](#extra-bytes-vlr)
+    5. [Extra bytes VLR](#extra-bytes-vlr)
 5. [Differences from EPT](#differences-from-ept)
 6. [Example Data](#example-data)
 7. [Reader Implementation Nodes](#reader-implementation-notes)
@@ -32,36 +31,33 @@ This document defines Cloud Optimized Point Cloud (COPC) version **1.0**.
 # Introduction
 
 A COPC file is a LAZ 1.4 file that stores point data organized in a clustered
-octree. It does this by providing some VLRs and using the variable chunking
-strategy of LAZ 1.4.
+octree. It contains a VLR that describe the octree organization of data that
+are stored in LAZ 1.4 chunks.
 
 Data organization of COPC is modeled after the [EPT data
 format](https://entwine.io/entwine-point-tile.html), but COPC clusters the
 storage of the octree as variably-chunked LAZ data in a single file.  This
-allows the data to be consumed by any reader than can handle variably-chunked
-LAZ 1.4 (most LASzip-based implementations). Not all information in an EPT
-dataset is currently supported or necessary in a COPC file. More information
-about the differences between EPT data and COPC can be found below.
+allows the data to be consumed sequentially by any reader than can handle
+variably-chunked LAZ 1.4 (LASzip, for example), or as a spatial subset for
+readers that interpret the COPC hierarchy. More information about the
+differences between EPT data and COPC can be found below.
 
 # Notation
 
 Some of the file format is described using C-language [fixed width integer
 types](https://en.cppreference.com/w/c/types/integer).  Groups of entities are
-denoted with a C-language struct, though all data is packed in the struct and
-encoded as little-endian values, which may not be the case for a C program
-using the same notation.
+denoted with a C-language struct, though all data is packed on byte boundaries
+and encoded as little-endian values, which may not be the case for a C program
+that uses the same notation.
 
 # Implementation
 
 Key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is unorganized:
 
-* It *MUST* contain *ONLY* [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
+* It *MUST* contain *ONLY* LAS PDRFs 6, 7, or 8 formatted data
 * It *MUST* contain a COPC [``info`` VLR](#info-vlr)
-* It *MUST* contain a COPC [``hierarchy`` VLR](#hierarchy-vlr)
+* It *MUST* contain a COPC  [``hierarchy`` VLR](#hierarchy-vlr)
 * It *MUST* contain a COPC [``extents`` VLR](#extents-vlr)
-* It *MUST* be stored as[LAZ 1.4](#laz-vlr) (no "compatibility" mode)
-* It *MUST* contain [OGC WKTv1 VLR](#spatial-reference-vlr)if the data has a spatial reference
-
 
 ## LAS PDRFs 6, 7, or 8
 
@@ -76,10 +72,8 @@ the [ASPRS LAS specification](https://github.com/ASPRSorg/LAS) for details.
 
 The ``info`` VLR *MUST* exist.
 
-The ``info`` VLR *MUST* be the **first** VLR in the file after the header.
-
-The ``info`` VLR *MAY* be used by software clients to know the details of the
-``hierarchy`` VLR.
+The ``info`` VLR *MUST* be the **first** VLR in the file (must begin at offset 375 from
+the beginning of the file).
 
 The ``info`` VLR is ``160`` bytes described by the following structure.
 ``reserved`` elements *MUST* be set to ``0``.
@@ -126,7 +120,7 @@ The ``hierarchy`` VLR *MUST* exist.
 Like EPT, COPC stores hierarchy information to allow a reader to locate points
 that are in a particular octree node.  Also like EPT, the hierarchy *MAY* be
 arranged in a tree of pages, but *SHALL* always consist of at least ONE hierarchy
-page. Hierarchy pages are contiguous in the data.
+page.
 
 The VLR data consists of one or more hierarchy pages. Each hierarchy data page
 is written as follows:
@@ -141,7 +135,7 @@ The VoxelKey corresponds to the naming of
       int32_t x;
       int32_t y;
       int32_t z;
-    };
+    }
 
 An entry corresponds to a single key/value pair in an
 [EPT hierarchy](https://entwine.io/entwine-point-tile.html#ept-data),
@@ -179,7 +173,7 @@ bytes).
     struct Page
     {
         Entry entries[page_size / 32];
-    };
+    }
 
 
 ## ``extents`` VLR
@@ -190,8 +184,6 @@ bytes).
 
 Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``extents`` VLR.
 
-
-
     struct CopcExtent
     {
         double minimum;
@@ -201,10 +193,8 @@ Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``exten
 
 ### Ordering
 
-The VLR body *MUST* contain a ``CopcExtent`` entry for each dimension. including X,
-Y, and Z, whose stats are in the LAS header, *AND* ``CopcExtent`` entries for
-each [Extra bytes Dimension](extra-bytes-VLR).
-
+The VLR body *MUST* contain a ``CopcExtent`` entry for each of the following dimensions and
+any dimensions specified by the [extra bytes VLR](extra-bytes-VLR), if one exists.
 
 | Dimension Name | Position | PDRF |
 | :-- | :--: | :--: |
@@ -227,42 +217,6 @@ each [Extra bytes Dimension](extra-bytes-VLR).
 | Blue | 16 |  7, 8 |
 | Infrared | 17 |  8 |
 
-
-### Extra bytes
-
-Each extra bytes item *MUST* contain corresponding ``CopcExtent`` item in the
-order defined by the [Extra bytes VLR](extra-bytes-vlr).
-
-
-## LAZ VLR
-
-| User ID                    | Record ID        |
-| -------------------------- | ---------------- |
-| ``laszip encoded``         | ``22204``        |
-
-The LAZ VLR *MUST* exist. A LAZ encoding VLR whose description is beyond the
-scope of this document.
-
-
-## Spatial reference VLR
-
-| User ID                    | Record ID        |
-| -------------------------- | ---------------- |
-| ``LASF_Projection``        | ``2112``         |
-
-The spatial reference VLR *MAY* exist.
-
-COPC clients are not expected to consume GeoTIFF VLRs, although
-their presence is allowed.
-
-## Extra bytes VLR
-
-| User ID        | Record ID        |
-| -------------- | ---------------- |
-| ``LASF_Spec``  | ``4``            |
-
-An Extra Bytes VLR containing that information *MUST* be present
-if extra per-point data is provided.
 
 # Differences from EPT
 
@@ -304,14 +258,15 @@ Readers should:
 * verify that the bytes at offsets 393 and 394 contain the values 1 and 0,
   respectively (this is the COPC version number, 1).
 * determine the point data record format by reading the byte at offset 104, masking off the
-  two high bits, which are used by LAZ to indicate compression, and can be ignored.
+  two high bits, which are used by LAZ to indicate co©mpression, and can be ignored.
 * determine the point data record length by reading two bytes at offset 105.
 
-The octree hierarchy is arranged in pages. The COPC VLR provides information pointing to
-root page. When reading data from a network connection, information in each page will
-be used to traverse to child pages.  Each entry in a hierarchy page either refers to a
-child hierarchy page or a data chunk. The size and file offset of each data chunk is
-provided in the hierarchy entries, allowing the chunks to be directly read for decoding.
+The octree hierarchy is arranged in pages. The COPC VLR provides information describing the
+location and size of root hierarchy page.  The root hierarchy page can be used to traverse to
+child pages.  Each entry in a hierarchy page either refers to a
+child hierarchy page, octree node data chunk, or an empty octree node. The size and
+file offset of each data chunk is provided in the hierarchy entries, allowing the chunks
+to be directly read for decoding.
 
 # Credits
 
@@ -376,13 +331,11 @@ situations, EPT's cost when moving data or deleting it can be significant. Like
 the tilesets of late 2000s raster map tiles, lots of little files are a
 problem.
 
-LAZ provides a feature that allows us to concatenate the individual LAZ files
-into a single, large LAZ file. This is the concept of a dynamically-sized chunk
+LAZ provides a feature that allows concatenation of the individual LAZ files
+into a single LAZ file. This is the concept of a dynamically-sized chunk
 table. It is a feature that [Martin Isenburg](https://twitter.com/rapidlasso)
 envisioned for quad-tree organized data, but it could work the same for an
-octree. Additionally, this chunk table provides the lookups needed for an
-HTTP-based client to compute where to directly access and incrementally read
-data.
+octree.
 
 # Structural Changes to Draft Specification
 
