@@ -13,7 +13,6 @@
     2. [``info`` VLR](#info-vlr)
     3. [``hierarchy`` VLR](#hierarchy-vlr)
     4. [``extents`` VLR](#extents-vlr)
-    5. [Extra bytes VLR](#extra-bytes-vlr)
 5. [Differences from EPT](#differences-from-ept)
 6. [Example Data](#example-data)
 7. [Reader Implementation Nodes](#reader-implementation-notes)
@@ -194,7 +193,7 @@ Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``exten
 ### Ordering
 
 The VLR body *MUST* contain a ``CopcExtent`` entry for each of the following dimensions and
-any dimensions specified by the [extra bytes VLR](extra-bytes-VLR), if one exists.
+any dimensions specified by the extra bytes VLR, if one exists.
 
 | Dimension Name | Position | PDRF |
 | :-- | :--: | :--: |
