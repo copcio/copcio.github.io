@@ -75,7 +75,7 @@ The ``info`` VLR *MUST* be the **first** VLR in the file (must begin at offset 3
 the beginning of the file).
 
 The ``info`` VLR is ``160`` bytes described by the following structure.
-``reserved`` elements *MUST* be set to ``0``.
+Writers *MUST* set ``reserved`` elements to ``0``.
 
     struct CopcInfo
     {
@@ -102,7 +102,7 @@ The ``info`` VLR is ``160`` bytes described by the following structure.
       // Size of the first hierarchy page in bytes
       uint64_t root_hier_size;
 
-      // Reserved for future use. Must be 0.
+      // Reserved for future use. Writers must set these to 0.
       uint64_t reserved[13];
     };
 
