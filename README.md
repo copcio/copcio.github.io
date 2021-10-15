@@ -33,6 +33,8 @@ A COPC file is a LAZ 1.4 file that stores point data organized in a clustered
 octree. It contains a VLR that describe the octree organization of data that
 are stored in LAZ 1.4 chunks.
 
+![``info`` VLR and the LAZ chunk table allow COPC readers to select and seek through the file.](copc-vlr-chunk-table-illustration.png)
+
 Data organization of COPC is modeled after the [EPT data
 format](https://entwine.io/entwine-point-tile.html), but COPC clusters the
 storage of the octree as variably-chunked LAZ data in a single file.  This
@@ -214,7 +216,7 @@ any dimensions specified by the extra bytes VLR, if one exists.
 | Red | 14 |  7, 8 |
 | Green | 15 |  7, 8 |
 | Blue | 16 |  7, 8 |
-| Infrared | 17 |  8 |
+| NIR | 17 |  8 |
 
 
 # Differences from EPT

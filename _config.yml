@@ -1,5 +1,5 @@
 title: COPC – Cloud Optimized Point Cloud
-description: Range-readable, compressed, organized LASzip specification
+description: Range-readable, compressed, geospatial organized LAZ specification
 
 remote_theme: pages-themes/modernist@v0.2.0
 plugins:
