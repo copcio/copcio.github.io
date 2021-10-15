@@ -356,8 +356,9 @@ octree.
 * Add `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size`,
   `eb_vlr_offset`, `eb_vlr_size` to the COPC VLR, replacing 6 `reserved` entries.
 * PDRF must be 6, 7, or 8
-* Add `extents` VLR.
+* Add `extents` VLR with UserID of `copc` and record ID of 10000.
 * VLR UserIDs switched from `entwine` to `copc`
-* Removed offsets in `info` VLR.
+* Removed `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size,
+  `eb_vlr_offset`, `eb_vlr_size`, `root_hier_offset`, `root_hier_size` from the COPC info VLR. Added 8 `reserved` entries.
 * Describe hierarchy entries for empty octree nodes.
-* Add back `root_hier_offset` and `root_hier_size` in `info`
+* Add back `root_hier_offset` and `root_hier_size` in COPC info VLR. Removed 2 `reserved` entries.
