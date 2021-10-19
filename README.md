@@ -245,7 +245,7 @@ any dimensions specified by the extra bytes VLR, if one exists.
   Center of Expertise](https://www.erdc.usace.army.mil/Locations/CRREL/) /
   [National Center for Airborne Laser Mapping](http://ncalm.cive.uh.edu/)
 
-# Reader Implementation Nodes
+# Reader Implementation Notes
 
 COPC is designed so that a reader needs to know little about the structure of a LAZ file.
 By reading the first 549 bytes (375 for the header + 54 for the COPC VLR header + 160
