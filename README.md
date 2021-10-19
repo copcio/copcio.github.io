@@ -104,7 +104,7 @@ The ``info`` VLR is ``160`` bytes described by the following structure.
       // Size of the first hierarchy page in bytes
       uint64_t root_hier_size;
 
-      // Reserved for future use. Must be 0.
+      // Must be 0
       uint64_t reserved[13];
     };
 
