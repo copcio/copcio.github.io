@@ -15,7 +15,7 @@
     4. [``extents`` VLR](#extents-vlr)
 5. [Differences from EPT](#differences-from-ept)
 6. [Example Data](#example-data)
-7. [Reader Implementation Nodes](#reader-implementation-notes)
+7. [Reader Implementation Notes](#reader-implementation-notes)
 8. [Credits](#credits)
 9. [Pronunciation](#pronunciation)
 10. [Discussion](#discussion)
