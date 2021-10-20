@@ -255,11 +255,11 @@ to create a LAZ decompressor.
 
 Readers should:
 * verify that the first four bytes of the file contain the ASCII characters "LASF".
-* verify that the 7 bytes starting offset 377 contain the characters `copc`.
+* verify that the 4 bytes starting at offset 377 contain the characters `copc`.
 * verify that the bytes at offsets 393 and 394 contain the values 1 and 0,
   respectively (this is the COPC version number, 1).
 * determine the point data record format by reading the byte at offset 104, masking off the
-  two high bits, which are used by LAZ to indicate co©mpression, and can be ignored.
+  two high bits, which are used by LAZ to indicate compression, and can be ignored.
 * determine the point data record length by reading two bytes at offset 105.
 
 The octree hierarchy is arranged in pages. The COPC VLR provides information describing the
