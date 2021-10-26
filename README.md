@@ -12,7 +12,6 @@
     1. [LAS PDRF 6, 7, or 8](#las-pdrfs-6-7-or-8)
     2. [``info`` VLR](#info-vlr)
     3. [``hierarchy`` VLR](#hierarchy-vlr)
-    4. [``extents`` VLR](#extents-vlr)
 5. [Differences from EPT](#differences-from-ept)
 6. [Example Data](#example-data)
 7. [Reader Implementation Notes](#reader-implementation-notes)
@@ -104,8 +103,14 @@ The ``info`` VLR is ``160`` bytes described by the following structure.
       // Size of the first hierarchy page in bytes
       uint64_t root_hier_size;
 
+      // Minimum of GPSTime
+      double gpstime_minimum;
+
+      // Maximum of GPSTime
+      double gpstime_maximum;
+
       // Must be 0
-      uint64_t reserved[13];
+      uint64_t reserved[11];
     };
 
 
@@ -176,47 +181,6 @@ bytes).
         Entry entries[page_size / 32];
     }
 
-
-## ``extents`` VLR
-
-| User ID                    | Record ID        |
-| -------------------------- | ---------------- |
-| ``copc``                   | ``10000``        |
-
-Minimal statistics about *EACH* dimension *MUST* be provided by the COPC ``extents`` VLR.
-
-    struct CopcExtent
-    {
-        double minimum;
-        double maximum;
-    }
-
-
-### Ordering
-
-The VLR body *MUST* contain a ``CopcExtent`` entry for each of the following dimensions and
-any dimensions specified by the extra bytes VLR, if one exists.
-
-| Dimension Name | Position | PDRF |
-| :-- | :--: | :--: |
-| X | 0 | 6, 7, 8 |
-| Y | 1 | 6, 7, 8 |
-| Z | 2 | 6, 7, 8 |
-| Intensity | 3 | 6, 7, 8 |
-| Return Number | 4 | 6, 7, 8 |
-| Number of Returns | 5 | 6, 7, 8 |
-| Scanner Channel | 6 | 6, 7, 8 |
-| Scan Direction Flag | 7 | 6, 7, 8 |
-| Edge of Flight Line | 8 | 6, 7, 8 |
-| Classification | 9 | 6, 7, 8 |
-| User Data | 10  | 6, 7, 8 |
-| Scan Angle | 11 | 6, 7, 8 |
-| Point Source ID | 12 | 6, 7, 8 |
-| GPS Time | 13 | 6, 7, 8 |
-| Red | 14 |  7, 8 |
-| Green | 15 |  7, 8 |
-| Blue | 16 |  7, 8 |
-| NIR | 17 |  8 |
 
 
 # Differences from EPT
@@ -363,3 +327,4 @@ octree.
   `eb_vlr_offset`, `eb_vlr_size`, `root_hier_offset`, `root_hier_size` from the COPC info VLR. Added 8 `reserved` entries.
 * Describe hierarchy entries for empty octree nodes.
 * Add back `root_hier_offset` and `root_hier_size` in COPC info VLR. Removed 2 `reserved` entries.
+* Remove `extents` VLR and put gpstime_minimum and gpstime_maximum in `info` VLR.
