@@ -57,7 +57,6 @@ Key aspects distinguish an organized COPC LAZ file from an LAZ 1.4 that is unorg
 * It *MUST* contain *ONLY* LAS PDRFs 6, 7, or 8 formatted data
 * It *MUST* contain a COPC [``info`` VLR](#info-vlr)
 * It *MUST* contain a COPC  [``hierarchy`` VLR](#hierarchy-vlr)
-* It *MUST* contain a COPC [``extents`` VLR](#extents-vlr)
 
 ## LAS PDRFs 6, 7, or 8
 
