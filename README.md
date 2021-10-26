@@ -288,7 +288,8 @@ Planetary Computer](https://planetarycomputer.microsoft.com/).
 
 There is no official pronunciation of COPC. Here are some possibilities:
 
-* co-pick – `ko pIk`
+* cah-pick – `ka pIk`
+* co-pick – `kö pIk`
 * cop-see – `kap si`
 * cop-pick – `kap pIk`
 * see oh pee see – `si o pi si`
