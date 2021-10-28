@@ -239,11 +239,23 @@ any dimensions specified by the extra bytes VLR, if one exists.
   file at
   [https://github.com/PDAL/data/blob/master/autzen/autzen-classified.copc.laz](https://github.com/PDAL/data/blob/master/autzen/autzen-classified.copc.laz)
 
+  View it in your browser at [https://viewer.copc.io/?copc=https://s3.amazonaws.com/hobu-lidar/autzen-classified.copc.laz](https://viewer.copc.io/?copc=https://s3.amazonaws.com/hobu-lidar/autzen-classified.copc.laz)
+
 * SoFi Stadium is available as a 2.3gb COPC file at
   [https://hobu-lidar.s3.amazonaws.com/sofi.copc.laz](https://hobu-lidar.s3.amazonaws.com/sofi.copc.laz).
+
+  View it in your browser at [https://viewer.copc.io/?copc=https://s3.amazonaws.com/hobu-lidar/sofi.copc.laz](https://viewer.copc.io/?copc=https://s3.amazonaws.com/hobu-lidar/sofi.copc.laz)
+
   The data are courtesy of [US Army Corps of Engineers Remote Sensing & GIS
   Center of Expertise](https://www.erdc.usace.army.mil/Locations/CRREL/) /
   [National Center for Airborne Laser Mapping](http://ncalm.cive.uh.edu/)
+
+* Millsite is available as a 45gb COPC file at
+  [https://s3.amazonaws.com/data.entwine.io/millsite.copc.laz ](https://s3.amazonaws.com/data.entwine.io/millsite.copc.laz ).
+
+  View it in your browser at [https://viewer.copc.io/?copc=https://s3.amazonaws.com/data.entwine.io/millsite.copc.laz ](https://viewer.copc.io/?copc=https://s3.amazonaws.com/data.entwine.io/millsite.copc.laz )
+
+  The data are from the [USGS 3DEP Millsite Reservoir Collection](https://usgs.entwine.io/data/view.html?r=%22https://s3-us-west-2.amazonaws.com/usgs-lidar-public/USGS_LPC_UT_MillsiteReservoir_2017_LAS_2018%22)
 
 # Reader Implementation Notes
 
