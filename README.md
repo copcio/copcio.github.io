@@ -82,16 +82,16 @@ The ``info`` VLR is ``160`` bytes described by the following structure.
     struct CopcInfo
     {
 
-      // X coordinate of center of octree
+      // Actual (unscaled) X coordinate of center of octree
       double center_x;
 
-      // Y coordinate of center of octree
+      // Actual (unscaled) Y coordinate of center of octree
       double center_y;
 
-      // Z coordinate of center of octree
+      // Actual (unscaled) Z coordinate of center of octree
       double center_z;
 
-      // halfsize of octree.
+      // Perpendicular distance from the center to any side of the root node.
       double halfsize;
 
       // Space between points at the root node.
