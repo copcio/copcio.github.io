@@ -262,7 +262,7 @@ COPC development was supported by
 | |
 | ------------------------------------ | ------------------------------------- |
 | [![USACE ERDC CRREL RS/GIS](u-s-army-cold-regions-research-and-engineering-laboratory-crrel-logo.png "USACE ERDC CRREL RS/GIS")](https://www.erdc.usace.army.mil/locations/crrel/) |
-| [![Microsoft Planetary Computer](microsoft-logo.png "Microsoft Planetary Computer")](https://planetarycomputer.microsoft.com/) Planetary Computer |
+| [![Microsoft Planetary Computer](microsoft-logo.png "Microsoft Planetary Computer")](https://planetarycomputer.microsoft.com/) |
 
 
 
