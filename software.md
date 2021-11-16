@@ -1,5 +1,6 @@
 # COPC Software Implementations
 
-* [PDAL](https://pdal.io)
 * [Untwine](https://github.com/hobu/untwine)
-* [COPC-lib](https://github.com/RockRobotic/copc-lib)
+* [PDAL readers.copc](http://pdal.io/stages/readers.copc.html)
+* [copc.js](github.com/connormanning/copc.js)
+* [COPC-lib](https://github.com/RockRobotic/copc-lib/)
