@@ -246,16 +246,23 @@ to be directly read for decoding.
 
 # Credits
 
-COPC was designed in July–September 2021 by Andrew Bell, Howard Butler, and Connor
+COPC was designed in July–November 2021 by Andrew Bell, Howard Butler, and Connor
 Manning of [Hobu, Inc.](https://hobu.co). [Entwine](https://entwine.io) and
 [Entwine Point Tile](https://entwine.io/entwine-point-tile.html) were also
 designed and developed by Connor Manning of [Hobu, Inc](https://hobu.co)
 
-<a href="https://hobu.co"><img src="hobu-logo.png" alt="Hobu, Inc" style="height: 100px "/></a>
 
-COPC development was supported by [USACE CRREL
-RS/GIS](https://www.erdc.usace.army.mil/Locations/CRREL/) and [Microsoft
-Planetary Computer](https://planetarycomputer.microsoft.com/).
+[![Hobu, Inc.](hobu-logo.png "Hobu, Inc.")](https://hobu.co)
+
+## Support
+
+COPC development was supported by
+
+
+| |
+| ------------------------------------ | ------------------------------------- |
+| [![USACE ERDC CRREL RS/GIS](u-s-army-cold-regions-research-and-engineering-laboratory-crrel-logo.png "USACE ERDC CRREL RS/GIS")](https://www.erdc.usace.army.mil/locations/crrel/) |
+| [![Microsoft Planetary Computer](microsoft-logo.png "Microsoft Planetary Computer")](https://planetarycomputer.microsoft.com/) Planetary Computer |
 
 
 
@@ -268,6 +275,8 @@ There is no official pronunciation of COPC. Here are some possibilities:
 * cop-see – `kap si`
 * cop-pick – `kap pIk`
 * see oh pee see – `si o pi si`
+
+\pagebreak
 
 # Discussion
 
