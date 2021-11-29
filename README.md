@@ -1,4 +1,4 @@
-# ***DRAFT*** Cloud Optimized Point Cloud Specification – 1.0 **DRAFT***
+# Cloud Optimized Point Cloud Specification – 1.0
 
 ©2021, [Hobu, Inc.](https://hobu.co) All rights reserved.
 
@@ -25,6 +25,8 @@
 # Version
 
 This document defines Cloud Optimized Point Cloud (COPC) version **1.0**.
+
+This document is available as a PDF at [copc-specification-1.0.pdf](copc-specification-1.0.pdf).
 
 # Introduction
 
@@ -213,7 +215,7 @@ bytes).
   Center of Expertise](https://www.erdc.usace.army.mil/Locations/CRREL/) /
   [National Center for Airborne Laser Mapping](http://ncalm.cive.uh.edu/)
 
-* Millsite is available as a 45gb COPC file at
+* Millsite is available as a 1.9gb COPC file at
   [https://s3.amazonaws.com/data.entwine.io/millsite.copc.laz ](https://s3.amazonaws.com/data.entwine.io/millsite.copc.laz ).
 
   View it in your browser at [https://viewer.copc.io/?copc=https://s3.amazonaws.com/data.entwine.io/millsite.copc.laz ](https://viewer.copc.io/?copc=https://s3.amazonaws.com/data.entwine.io/millsite.copc.laz )
