@@ -9,3 +9,4 @@
 * [laspy](https://github.com/laspy/laspy/pull/219)
 * [QGIS 3.26.0](https://qgis.org/en/site/forusers/download.html)
 * [Safe FME](https://www.safe.com)
+* [copc-rs](https://github.com/pka/copc-rs)
