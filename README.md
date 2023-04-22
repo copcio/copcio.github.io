@@ -356,10 +356,10 @@ octree.
 
 # Validation
 
-* An online validator of COPC files is available at https://validator.copc.io. Simply drag-n-drop
+* An online validator of COPC files is available at [https://validator.copc.io](https://validator.copc.io). Simply drag-n-drop
 a (reasonably-sized) COPC file onto the page and it will validate the header information and optionally
 allow you to visualize it.
 
-* A C++ utility for verifying COPC metadata is available at https://github.com/hobuinc/copcverify
+* A C++ utility for verifying COPC metadata is available at [https://github.com/hobuinc/copcverify](https://github.com/hobuinc/copcverify)
 
 
