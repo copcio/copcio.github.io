@@ -20,6 +20,7 @@
 10. [Discussion](#discussion)
 11. [Structural Changes to Draft Specification](#structural-changes-to-draft-specification)
 12. [COPC Software Implementations](software.md)
+13. [Validation](#validation)
 
 
 # Version
@@ -350,3 +351,15 @@ octree.
 * Describe hierarchy entries for empty octree nodes.
 * Add back `root_hier_offset` and `root_hier_size` in COPC info VLR. Removed 2 `reserved` entries.
 * Remove `extents` VLR and put gpstime_minimum and gpstime_maximum in `info` VLR.
+
+
+
+# Validation
+
+* An online validator of COPC files is available at https://validator.copc.io. Simply drag-n-drop
+a (reasonably-sized) COPC file onto the page and it will validate the header information and optionally
+allow you to visualize it.
+
+* A C++ utility for verifying COPC metadata is available at https://github.com/hobuinc/copcverify
+
+
