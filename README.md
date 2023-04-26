@@ -226,7 +226,7 @@ bytes).
 # Reader Implementation Notes
 
 COPC is designed so that a reader needs to know little about the structure of a LAZ file.
-By reading the first 549 bytes (375 for the header + 54 for the COPC VLR header + 160
+By reading the first 589 bytes (375 for the header + 54 for the COPC VLR header + 160
 for the COPC VLR), the software can verify that the file is a COPC file and determine
 the point data record format and point data record length, both of which are necessary
 to create a LAZ decompressor.
