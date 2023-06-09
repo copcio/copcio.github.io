@@ -247,6 +247,13 @@ child hierarchy page, octree node data chunk, or an empty octree node. The size 
 file offset of each data chunk is provided in the hierarchy entries, allowing the chunks
 to be directly read for decoding.
 
+# Server Implementation Notes
+
+For streaming of COPC files from HTTP servers to work, the server hosting COPC files needs to be configured to allow:
+
+* [HTTP range requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests)
+* [Cross-origin requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) - if other hosts should be allowed to access the data (in web browsers)
+
 # Credits
 
 COPC was designed in July–November 2021 by Andrew Bell, Howard Butler, and Connor
