@@ -353,7 +353,7 @@ octree.
 * PDRF must be 6, 7, or 8
 * Add `extents` VLR with UserID of `copc` and record ID of 10000.
 * VLR UserIDs switched from `entwine` to `copc`
-* Removed `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size,
+* Removed `laz_vlr_offset`, `laz_vlr_size`, `wkt_vlr_offset`, `wkt_vlr_size`,
   `eb_vlr_offset`, `eb_vlr_size`, `root_hier_offset`, `root_hier_size` from the COPC info VLR. Added 8 `reserved` entries.
 * Describe hierarchy entries for empty octree nodes.
 * Add back `root_hier_offset` and `root_hier_size` in COPC info VLR. Removed 2 `reserved` entries.
@@ -363,7 +363,7 @@ octree.
 
 # Validation
 
-* An online validator of COPC files is available at [https://validator.copc.io](https://validator.copc.io). Simply drag-n-drop
+* An online validator of COPC files is available at [https://validate.copc.io](https://validate.copc.io). Simply drag-n-drop
 a (reasonably-sized) COPC file onto the page and it will validate the header information and optionally
 allow you to visualize it.
 
