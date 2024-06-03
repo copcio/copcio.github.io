@@ -16,3 +16,4 @@
 * [Kart](https://docs.kartproject.org/en/latest/pages/pointcloud_datasets.html)
 * [copc-validator.js](https://github.com/hobuinc/copc-validator)
 * [QT Modeler](https://appliedimagery.com/qt-modeler-v8-3-1-is-available/)
+* [FUSION](http://forsys.sefs.uw.edu/fusion/fusionlatest.html)
