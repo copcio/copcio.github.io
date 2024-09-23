@@ -6,7 +6,7 @@ jobs:
   docs:
     name: Docs
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: true
     container: osgeo/proj-docs
