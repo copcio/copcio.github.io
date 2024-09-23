@@ -6,18 +6,19 @@ jobs:
   docs:
     name: Docs
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: true
     container: osgeo/proj-docs
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Print versions
       shell: bash -l {0}
       run: |
           python3 --version
-          DEBIAN_FRONTEND=noninteractive apt-get install pandoc texlive-xetex --assume-yes
+          DEBIAN_FRONTEND=noninteractive apt-get update --assume-yes
+          DEBIAN_FRONTEND=noninteractive apt-get install pandoc texlive-fonts-recommended texlive-xetex --assume-yes
           pip3 install pandoc
           sphinx-build --version
     - name: Lint .md files
@@ -34,11 +35,11 @@ jobs:
       run: |
         pandoc -s README.md -o README.pdf  --pdf-engine=xelatex
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: PDF
         path: README.pdf
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: HTML
         path: README.html
