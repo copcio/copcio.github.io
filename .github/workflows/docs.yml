@@ -12,7 +12,7 @@ jobs:
     container: osgeo/proj-docs
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Print versions
       shell: bash -l {0}
       run: |
@@ -34,11 +34,11 @@ jobs:
       run: |
         pandoc -s README.md -o README.pdf  --pdf-engine=xelatex
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: PDF
         path: README.pdf
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: HTML
         path: README.html
