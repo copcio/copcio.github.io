@@ -17,6 +17,7 @@ jobs:
       shell: bash -l {0}
       run: |
           python3 --version
+          DEBIAN_FRONTEND=noninteractive apt-get update --assume-yes
           DEBIAN_FRONTEND=noninteractive apt-get install pandoc texlive-xetex --assume-yes
           pip3 install pandoc
           sphinx-build --version
