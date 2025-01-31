@@ -4,6 +4,7 @@
 * [PDAL readers.copc](http://pdal.io/stages/readers.copc.html)
 * [PDAL writers.copc](http://pdal.io/stages/writers.copc.html)
 * [copc.js](https://github.com/connormanning/copc.js)
+* [iTowns](https://github.com/iTowns/itowns) - powered by copc.js (cheers!)
 * [Giro3D](https://giro3d.org) - thanks to copc.js
 * [COPC-lib](https://github.com/RockRobotic/copc-lib/)
 * [Manifold Release 9](https://manifold.net/)
