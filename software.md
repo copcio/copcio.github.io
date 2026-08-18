@@ -22,3 +22,4 @@
 * [QT Modeler](https://appliedimagery.com/qt-modeler-v8-3-1-is-available/)
 * [FUSION](http://forsys.sefs.uw.edu/fusion/fusionlatest.html)
 * [copc4R](https://github.com/bi0m3trics/copc4R)
+* [copcesium](https://github.com/Jangmyun/copcesium) - CesiumJS provider for real-time COPC point cloud streaming and rendering
